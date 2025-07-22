@@ -12,14 +12,14 @@
 //! Configuration can be loaded from multiple sources in order of preference:
 //! 
 //! 1. Environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.)
-//! 2. Configuration files (`~/.config/bevy-ai/config.toml`)
-//! 3. Project-specific config files (`./bevy-ai.toml`)
+//! 2. Configuration files (`~/.config/bevy-agent/config.toml`)
+//! 3. Project-specific config files (`./bevy-agent.toml`)
 //! 4. Default values
 //! 
 //! # Example
 //! 
 //! ```rust,no_run
-//! use bevy_ai::config::{AIConfig, OpenAIConfig};
+//! use bevy_agent::config::{AIConfig, OpenAIConfig};
 //! 
 //! // Load from environment
 //! let config = AIConfig::from_env().unwrap_or_default();
@@ -61,42 +61,57 @@ pub struct AIConfig {
 /// OpenAI API configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct OpenAIConfig {
+    /// OpenAI API key
     pub api_key: String,
+    /// Optional organization ID
     pub organization: Option<String>,
+    /// Optional custom base URL
     pub base_url: Option<String>,
 }
 
 /// Anthropic API configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AnthropicConfig {
+    /// Anthropic API key
     pub api_key: String,
+    /// Optional custom base URL
     pub base_url: Option<String>,
 }
 
 /// Google API configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GoogleConfig {
+    /// Google API key
     pub api_key: String,
+    /// Optional custom base URL
     pub base_url: Option<String>,
 }
 
 /// Available AI models
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub enum ModelType {
+    /// OpenAI GPT-4 model
     #[serde(rename = "gpt-4")]
     GPT4,
+    /// OpenAI GPT-4 Turbo model
     #[serde(rename = "gpt-4-turbo")]
     GPT4Turbo,
+    /// OpenAI GPT-3.5 Turbo model
     #[serde(rename = "gpt-3.5-turbo")]
     GPT35Turbo,
+    /// Anthropic Claude 3 Opus model
     #[serde(rename = "claude-3-opus")]
     Claude3Opus,
+    /// Anthropic Claude 3 Sonnet model
     #[serde(rename = "claude-3-sonnet")]
     Claude3Sonnet,
+    /// Anthropic Claude 3 Haiku model
     #[serde(rename = "claude-3-haiku")]
     Claude3Haiku,
+    /// Google Gemini Pro model
     #[serde(rename = "gemini-pro")]
     GeminiPro,
+    /// Google Gemini Pro Vision model
     #[serde(rename = "gemini-pro-vision")]
     GeminiProVision,
 }
@@ -199,7 +214,7 @@ pub struct ProjectSettings {
     pub default_template: String,
 }
 
-/// Project configuration stored in .bevy-ai.json
+/// Project configuration stored in .bevy-agent.json
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProjectConfig {
     /// Project metadata
@@ -217,13 +232,21 @@ pub struct ProjectConfig {
 /// Project metadata
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProjectMetadata {
+    /// Project name
     pub name: String,
+    /// Project description
     pub description: String,
+    /// Project version
     pub version: String,
+    /// Creation timestamp
     pub created_at: chrono::DateTime<chrono::Utc>,
+    /// Last update timestamp
     pub updated_at: chrono::DateTime<chrono::Utc>,
+    /// Bevy engine version used
     pub bevy_version: String,
+    /// Enabled features
     pub features: Vec<String>,
+    /// Project tags
     pub tags: Vec<String>,
 }
 
@@ -344,7 +367,7 @@ impl AIConfig {
             });
         }
         
-        if let Ok(model) = env::var("BEVY_AI_DEFAULT_MODEL") {
+        if let Ok(model) = env::var("bevy_agent_DEFAULT_MODEL") {
             config.default_model = model.parse()?;
         }
         
@@ -368,7 +391,7 @@ impl AIConfig {
     pub fn default_config_path() -> Result<PathBuf> {
         Ok(dirs::home_dir()
             .ok_or_else(|| BevyAIError::Config(config::ConfigError::Message("Could not find home directory".to_string())))?
-            .join(".bevy-ai-config.json"))
+            .join(".bevy-agent-config.json"))
     }
     
     /// Load configuration from default location or create if not exists

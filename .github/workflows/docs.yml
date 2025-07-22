@@ -26,7 +26,7 @@ jobs:
     - name: Build documentation
       run: |
         cargo doc --all-features --no-deps --document-private-items
-        echo '<meta http-equiv="refresh" content="0; url=bevy_ai">' > target/doc/index.html
+        echo '<meta http-equiv="refresh" content="0; url=bevy_agent_agent">' > target/doc/index.html
 
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
@@ -34,7 +34,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./target/doc
-        cname: docs.bevy-ai.dev  # Optional: if you have a custom domain
+        cname: docs.bevy-agent.dev  # Optional: if you have a custom domain
 
   check-docs:
     name: Check Documentation Links

@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial release of Bevy AI
+- Initial release of Bevy AI Agent
 - AI-powered game development assistant
 - Multi-provider AI support (OpenAI, Anthropic, Google)
 - Comprehensive CLI interface with 20+ commands

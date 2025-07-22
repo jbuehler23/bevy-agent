@@ -15,7 +15,7 @@ We take security seriously. If you discover a security vulnerability, please fol
 ### Private Disclosure
 
 1. **Do not** open a public issue for security vulnerabilities
-2. Send an email to: security@bevy-ai.dev (or the project maintainer)
+2. Send an email to: security@bevy-agent.dev (or the project maintainer)
 3. Include detailed information about the vulnerability
 4. Allow time for us to investigate and fix the issue
 
@@ -86,7 +86,7 @@ We believe in responsible disclosure and will:
 ## Contact
 
 For security-related inquiries:
-- Email: security@bevy-ai.dev
+- Email: security@bevy-agent.dev
 - For non-security issues, use the GitHub issue tracker
 
 ## Security Tools

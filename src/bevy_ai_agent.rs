@@ -1,8 +1,8 @@
 //! Bevy AI Prototype Agent - Enhanced with AI Model Integration
 //! 
-//! Usage: bevy-ai "create a roguelike dungeon crawler with procedural generation"
-//!        bevy-ai "add a magic system with spell combinations"
-//!        bevy-ai "create a physics-based puzzle game like Portal"
+//! Usage: bevy-agent "create a roguelike dungeon crawler with procedural generation"
+//!        bevy-agent "add a magic system with spell combinations"
+//!        bevy-agent "create a physics-based puzzle game like Portal"
 
 use clap::{Parser, Subcommand};
 use serde::{Deserialize, Serialize};
@@ -15,7 +15,7 @@ use std::env;
 use tokio;
 
 #[derive(Parser)]
-#[command(name = "bevy-ai")]
+#[command(name = "bevy-agent")]
 #[command(about = "AI-powered Bevy game prototyping assistant with GPT/Claude integration")]
 struct Cli {
     #[command(subcommand)]
@@ -154,7 +154,7 @@ impl EnhancedAIAgent {
     fn load_config() -> Result<AIConfig, Box<dyn std::error::Error>> {
         let config_path = dirs::home_dir()
             .ok_or("Could not find home directory")?
-            .join(".bevy-ai-config.json");
+            .join(".bevy-agent-config.json");
 
         if config_path.exists() {
             let content = fs::read_to_string(&config_path)?;
@@ -402,7 +402,7 @@ bevy = {{ version = "0.12", features = ["default"] }}
         };
 
         let config_json = serde_json::to_string_pretty(&config)?;
-        fs::write(format!("{}/.bevy-ai.json", name), config_json)?;
+        fs::write(format!("{}/.bevy-agent.json", name), config_json)?;
 
         println!("✨ AI-generated project created: {}", name);
         println!("📁 Files generated in ./{}/", name);
@@ -412,7 +412,7 @@ bevy = {{ version = "0.12", features = ["default"] }}
     }
 
     async fn add_ai_feature(&self, feature_description: &str, model: Option<String>) -> Result<(), Box<dyn std::error::Error>> {
-        if !Path::new(".bevy-ai.json").exists() {
+        if !Path::new(".bevy-agent.json").exists() {
             println!("❌ No Bevy AI project found in current directory");
             return Ok(());
         }
@@ -427,7 +427,7 @@ bevy = {{ version = "0.12", features = ["default"] }}
         fs::write("src/main.rs", &updated_code)?;
 
         // Update project config
-        let config_content = fs::read_to_string(".bevy-ai.json")?;
+        let config_content = fs::read_to_string(".bevy-agent.json")?;
         let mut config: ProjectConfig = serde_json::from_str(&config_content)?;
         
         config.features.push(feature_description.to_string());
@@ -439,7 +439,7 @@ bevy = {{ version = "0.12", features = ["default"] }}
         });
 
         let config_json = serde_json::to_string_pretty(&config)?;
-        fs::write(".bevy-ai.json", config_json)?;
+        fs::write(".bevy-agent.json", config_json)?;
 
         println!("✅ AI added feature: {}", feature_description);
         
@@ -449,7 +449,7 @@ bevy = {{ version = "0.12", features = ["default"] }}
     fn save_config(&self) -> Result<(), Box<dyn std::error::Error>> {
         let config_path = dirs::home_dir()
             .ok_or("Could not find home directory")?
-            .join(".bevy-ai-config.json");
+            .join(".bevy-agent-config.json");
         
         let content = serde_json::to_string_pretty(&self.config)?;
         fs::write(&config_path, content)?;
@@ -497,7 +497,7 @@ async fn main() {
                 Ok(agent) => agent,
                 Err(e) => {
                     println!("❌ Error initializing AI agent: {}", e);
-                    println!("💡 Run 'bevy-ai config --openai-key YOUR_KEY' to configure API access");
+                    println!("💡 Run 'bevy-agent config --openai-key YOUR_KEY' to configure API access");
                     return;
                 }
             };

@@ -1,7 +1,7 @@
 //! Example demonstrating different AI providers
 
-use bevy_ai::{BevyAIAgent, AIConfig, Result};
-use bevy_ai::config::{OpenAIConfig, AnthropicConfig, GoogleConfig};
+use bevy_agent::{BevyAIAgent, AIConfig, Result};
+use bevy_agent::config::{OpenAIConfig, AnthropicConfig, GoogleConfig};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -36,7 +36,7 @@ async fn main() -> Result<()> {
 
 fn create_openai_config() -> Result<AIConfig> {
     let api_key = std::env::var("OPENAI_API_KEY")
-        .map_err(|_| bevy_ai::BevyAIError::Io(std::io::Error::new(
+        .map_err(|_| bevy_agent::BevyAIError::Io(std::io::Error::new(
             std::io::ErrorKind::NotFound, 
             "OPENAI_API_KEY not found"
         )))?;
@@ -52,7 +52,7 @@ fn create_openai_config() -> Result<AIConfig> {
 
 fn create_anthropic_config() -> Result<AIConfig> {
     let api_key = std::env::var("ANTHROPIC_API_KEY")
-        .map_err(|_| bevy_ai::BevyAIError::Io(std::io::Error::new(
+        .map_err(|_| bevy_agent::BevyAIError::Io(std::io::Error::new(
             std::io::ErrorKind::NotFound, 
             "ANTHROPIC_API_KEY not found"
         )))?;
@@ -67,7 +67,7 @@ fn create_anthropic_config() -> Result<AIConfig> {
 
 fn create_google_config() -> Result<AIConfig> {
     let api_key = std::env::var("GOOGLE_API_KEY")
-        .map_err(|_| bevy_ai::BevyAIError::Io(std::io::Error::new(
+        .map_err(|_| bevy_agent::BevyAIError::Io(std::io::Error::new(
             std::io::ErrorKind::NotFound, 
             "GOOGLE_API_KEY not found"
         )))?;

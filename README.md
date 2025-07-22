@@ -1,13 +1,13 @@
-# 🧠 Bevy AI - AI-Powered Game Development Assistant
+# 🧠 Bevy AI Agent - AI-Powered Game Development Assistant
 
-[![Crates.io](https://img.shields.io/crates/v/bevy-ai.svg)](https://crates.io/crates/bevy-ai)
-[![Documentation](https://docs.rs/bevy-ai/badge.svg)](https://docs.rs/bevy-ai)
+[![Crates.io](https://img.shields.io/crates/v/bevy-agent.svg)](https://crates.io/crates/bevy-agent)
+[![Documentation](https://docs.rs/bevy-agent/badge.svg)](https://docs.rs/bevy-agent)
 [![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](LICENSE)
-[![Build Status](https://github.com/jbuehler23/bevy-ai/workflows/CI/badge.svg)](https://github.com/jbuehler23/bevy-ai/actions)
-[![Downloads](https://img.shields.io/crates/d/bevy-ai.svg)](https://crates.io/crates/bevy-ai)
+[![Build Status](https://github.com/jbuehler23/bevy-agent/workflows/CI/badge.svg)](https://github.com/jbuehler23/bevy-agent/actions)
+[![Downloads](https://img.shields.io/crates/d/bevy-agent.svg)](https://crates.io/crates/bevy-agent)
 [![Rust Version](https://img.shields.io/badge/rust-1.70+-orange.svg)](https://www.rust-lang.org)
 
-Bevy AI is a comprehensive library and CLI tool that leverages cutting-edge AI models (GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language code generation, intelligent feature addition, and automated code optimization.
+Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edge AI models (GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language code generation, intelligent feature addition, and automated code optimization.
 
 ## ✨ Features
 
@@ -34,14 +34,14 @@ Bevy AI is a comprehensive library and CLI tool that leverages cutting-edge AI m
 
 ### CLI Tool
 ```bash
-cargo install bevy-ai
+cargo install bevy-agent
 ```
 
 ### Library
 Add to your `Cargo.toml`:
 ```toml
 [dependencies]
-bevy-ai = "0.1.0"
+bevy-agent = "0.1.0"
 tokio = { version = "1.0", features = ["full"] }
 ```
 
@@ -50,48 +50,48 @@ tokio = { version = "1.0", features = ["full"] }
 ### 1. Configure API Keys
 ```bash
 # Configure OpenAI (recommended)
-bevy-ai config --openai-key sk-...
+bevy-agent config --openai-key sk-...
 
 # Or use Anthropic
-bevy-ai config --anthropic-key ant-...
+bevy-agent config --anthropic-key ant-...
 
 # Or use Google
-bevy-ai config --google-key AIz...
+bevy-agent config --google-key AIz...
 
 # Set default model
-bevy-ai config --default-model gpt-4
+bevy-agent config --default-model gpt-4
 ```
 
 ### 2. Create Your First AI-Generated Game
 ```bash
 # Create a 2D platformer
-bevy-ai create "2D platformer with physics and collectibles"
+bevy-agent create "2D platformer with physics and collectibles"
 
 # Create a 3D space shooter
-bevy-ai create "3D space shooter with asteroids and power-ups"
+bevy-agent create "3D space shooter with asteroids and power-ups"
 
 # Create a puzzle game
-bevy-ai create "puzzle game with grid-based mechanics and level progression"
+bevy-agent create "puzzle game with grid-based mechanics and level progression"
 ```
 
 ### 3. Add Features to Existing Games
 ```bash
 cd your-game-project
-bevy-ai add "inventory system with drag-and-drop UI"
-bevy-ai add "magic system with spell combinations and cooldowns"
-bevy-ai add "multiplayer support with networking"
+bevy-agent add "inventory system with drag-and-drop UI"
+bevy-agent add "magic system with spell combinations and cooldowns"
+bevy-agent add "multiplayer support with networking"
 ```
 
 ### 4. Improve and Optimize Code
 ```bash
 # Improve performance
-bevy-ai improve performance
+bevy-agent improve performance
 
 # Enhance readability
-bevy-ai improve readability
+bevy-agent improve readability
 
 # Add better structure
-bevy-ai improve structure
+bevy-agent improve structure
 ```
 
 ## 🎯 Advanced Usage
@@ -99,85 +99,85 @@ bevy-ai improve structure
 ### Complex Game Creation
 ```bash
 # Roguelike with procedural generation
-bevy-ai create "roguelike dungeon crawler with procedural generation, turn-based combat, and character progression"
+bevy-agent create "roguelike dungeon crawler with procedural generation, turn-based combat, and character progression"
 
 # Physics-based puzzle game
-bevy-ai create "physics-based puzzle game like Portal with teleportation mechanics and environmental puzzles"
+bevy-agent create "physics-based puzzle game like Portal with teleportation mechanics and environmental puzzles"
 
 # Tower defense with AI
-bevy-ai create "tower defense with pathfinding enemies, upgradeable towers, and resource management"
+bevy-agent create "tower defense with pathfinding enemies, upgradeable towers, and resource management"
 ```
 
 ### Model Selection
 ```bash
 # Use specific models for different tasks
-bevy-ai create "space game" --model gpt-4
-bevy-ai add "multiplayer" --model claude-3-opus
-bevy-ai improve performance --model gpt-4-turbo
+bevy-agent create "space game" --model gpt-4
+bevy-agent add "multiplayer" --model claude-3-opus
+bevy-agent improve performance --model gpt-4-turbo
 ```
 
 ### Code Analysis and Debugging
 ```bash
 # Get AI explanations of your codebase
-bevy-ai explain
+bevy-agent explain
 
 # Debug specific issues
-bevy-ai debug "compilation error in movement system"
+bevy-agent debug "compilation error in movement system"
 
 # Analyze specific files
-bevy-ai explain --file src/player.rs
+bevy-agent explain --file src/player.rs
 ```
 
 ### Project Management
 ```bash
 # View project information
-bevy-ai project info
+bevy-agent project info
 
 # Show project statistics
-bevy-ai project stats
+bevy-agent project stats
 
 # View AI conversation history
-bevy-ai project history
+bevy-agent project history
 
 # Clean up generated files
-bevy-ai project clean
+bevy-agent project clean
 ```
 
 ### Build Operations
 ```bash
 # Build your game
-bevy-ai build build
+bevy-agent build build
 
 # Run your game
-bevy-ai build run
+bevy-agent build run
 
 # Check for errors
-bevy-ai build check
+bevy-agent build check
 
 # Run clippy lints
-bevy-ai build clippy
+bevy-agent build clippy
 
 # Format code
-bevy-ai build format
+bevy-agent build format
 ```
 
 ### Template System
 ```bash
 # List available templates
-bevy-ai template list
+bevy-agent template list
 
 # Show template details
-bevy-ai template show platformer_2d
+bevy-agent template show platformer_2d
 
 # Create game from template
-bevy-ai create "my platformer" --template platformer_2d
+bevy-agent create "my platformer" --template platformer_2d
 ```
 
 ## 📚 Library Usage
 
 ### Basic Usage
 ```rust
-use bevy_ai::{BevyAIAgent, AIConfig, ModelType};
+use bevy_agent_agent::{BevyAIAgent, AIConfig, ModelType};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -197,7 +197,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Advanced Project Management
 ```rust
-use bevy_ai::{Project, BevyAIAgent, AIConfig};
+use bevy_agent_agent::{Project, BevyAIAgent, AIConfig};
 use std::path::PathBuf;
 
 #[tokio::main]
@@ -231,7 +231,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Custom AI Requests
 ```rust
-use bevy_ai::{BevyAIAgent, AIConfig, ModelType};
+use bevy_agent_agent::{BevyAIAgent, AIConfig, ModelType};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -256,7 +256,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Metroidvania Game
 ```bash
-bevy-ai create "metroidvania with ability-gated progression, interconnected world, and backtracking mechanics"
+bevy-agent create "metroidvania with ability-gated progression, interconnected world, and backtracking mechanics"
 ```
 Generates:
 - Interconnected world systems
@@ -266,7 +266,7 @@ Generates:
 
 ### Dialogue System
 ```bash
-bevy-ai add "dialogue system with branching conversations, character portraits, and voice acting support"
+bevy-agent add "dialogue system with branching conversations, character portraits, and voice acting support"
 ```
 Creates:
 - NPC interaction systems
@@ -276,7 +276,7 @@ Creates:
 
 ### A* Pathfinding
 ```bash
-bevy-ai add "A* pathfinding for enemy AI with dynamic obstacle avoidance"
+bevy-agent add "A* pathfinding for enemy AI with dynamic obstacle avoidance"
 ```
 Implements:
 - Pathfinding algorithms
@@ -287,7 +287,7 @@ Implements:
 ## 🔧 Configuration
 
 ### Configuration File
-Bevy AI stores configuration in `~/.bevy-ai-config.json`:
+Bevy AI stores configuration in `~/.bevy-agent-config.json`:
 
 ```json
 {
@@ -328,11 +328,11 @@ You can also configure using environment variables:
 export OPENAI_API_KEY="sk-..."
 export ANTHROPIC_API_KEY="ant-..."
 export GOOGLE_API_KEY="AIz..."
-export BEVY_AI_DEFAULT_MODEL="gpt-4"
+export bevy_agent_DEFAULT_MODEL="gpt-4"
 ```
 
 ### Project Configuration
-Each Bevy AI project includes a `.bevy-ai.json` file that tracks:
+Each Bevy AI project includes a `.bevy-agent.json` file that tracks:
 - Project metadata
 - AI conversation history
 - Generated files
@@ -398,8 +398,8 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ### Development Setup
 ```bash
-git clone https://github.com/jbuehler23/bevy-ai.git
-cd bevy-ai
+git clone https://github.com/jbuehler23/bevy-agent.git
+cd bevy-agent
 cargo build
 cargo test
 ```
@@ -432,11 +432,11 @@ at your option.
 
 ## 🔗 Links
 
-- [Documentation](https://docs.rs/bevy-ai)
-- [Crates.io](https://crates.io/crates/bevy-ai)
+- [Documentation](https://docs.rs/bevy-agent)
+- [Crates.io](https://crates.io/crates/bevy-agent)
 - [Examples](examples/)
-- [Issue Tracker](https://github.com/jbuehler23/bevy-ai/issues)
-- [Discussions](https://github.com/jbuehler23/bevy-ai/discussions)
+- [Issue Tracker](https://github.com/jbuehler23/bevy-agent/issues)
+- [Discussions](https://github.com/jbuehler23/bevy-agent/discussions)
 
 ## 📊 Status
 

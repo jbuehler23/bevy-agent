@@ -1,6 +1,6 @@
 //! Basic example showing how to use Bevy AI as a library
 
-use bevy_ai::{BevyAIAgent, AIConfig, ModelType};
+use bevy_agent::{BevyAIAgent, AIConfig, ModelType};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {

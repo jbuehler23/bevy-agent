@@ -1,6 +1,6 @@
-//! # Bevy AI - AI-Powered Game Development Assistant
+//! # Bevy AI Agent - AI-Powered Game Development Assistant
 //! 
-//! Bevy AI is a comprehensive library and CLI tool that leverages cutting-edge AI models
+//! Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edge AI models
 //! (GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language
 //! code generation, intelligent feature addition, and automated code optimization.
 //! 
@@ -21,7 +21,7 @@
 //! 
 //! ```toml
 //! [dependencies]
-//! bevy-ai = "0.1"
+//! bevy-agent = "0.1"
 //! bevy = "0.14"  # Optional, for Bevy integration features
 //! tokio = { version = "1.0", features = ["full"] }  # For async support
 //! ```
@@ -30,16 +30,16 @@
 //! 
 //! ```bash
 //! # Install the CLI tool
-//! cargo install bevy-ai
+//! cargo install bevy-agent
 //! 
 //! # Configure API keys
-//! bevy-ai config --openai-key sk-...
+//! bevy-agent config --openai-key sk-...
 //! 
 //! # Create a new game
-//! bevy-ai create "2D platformer with physics and collectibles"
+//! bevy-agent create "2D platformer with physics and collectibles"
 //! 
 //! # Add features to existing games
-//! bevy-ai add "inventory system with drag-and-drop UI"
+//! bevy-agent add "inventory system with drag-and-drop UI"
 //! ```
 //! 
 //! ## Library Usage
@@ -47,11 +47,11 @@
 //! ### Basic AI Agent Usage
 //! 
 //! ```rust,no_run
-//! use bevy_ai::{BevyAIAgent, AIConfig};
-//! use bevy_ai::config::OpenAIConfig;
+//! use bevy_agent_agent::{BevyAIAgent, AIConfig};
+//! use bevy_agent::config::OpenAIConfig;
 //! 
 //! #[tokio::main]
-//! async fn main() -> bevy_ai::Result<()> {
+//! async fn main() -> bevy_agent::Result<()> {
 //!     // Configure AI provider
 //!     let config = AIConfig {
 //!         openai: Some(OpenAIConfig {
@@ -80,10 +80,10 @@
 //! ### Using Game Templates
 //! 
 //! ```rust,no_run
-//! use bevy_ai::game_templates::{TemplateManager, TemplateContext};
+//! use bevy_agent_agent::game_templates::{TemplateManager, TemplateContext};
 //! 
 //! #[tokio::main]
-//! async fn main() -> bevy_ai::Result<()> {
+//! async fn main() -> bevy_agent_agent::Result<()> {
 //!     let manager = TemplateManager::new()?;
 //!     
 //!     // List available templates
@@ -132,7 +132,7 @@
 //! All functions return `Result<T, BevyAIError>` for comprehensive error handling:
 //! 
 //! ```rust,no_run
-//! use bevy_ai::{BevyAIError, Result};
+//! use bevy_agent_agent::{BevyAIError, Result};
 //! 
 //! fn handle_errors() -> Result<()> {
 //!     match some_ai_operation() {
@@ -170,4 +170,4 @@ pub use project::{Project, ProjectManager};
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// User-Agent string for HTTP requests
-pub const USER_AGENT: &str = concat!("bevy-ai/", env!("CARGO_PKG_VERSION"));
+pub const USER_AGENT: &str = concat!("bevy-agent/", env!("CARGO_PKG_VERSION"));

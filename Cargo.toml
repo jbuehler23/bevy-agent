@@ -1,12 +1,12 @@
 [package]
-name = "bevy-ai"
+name = "bevy-agent"
 version = "0.1.0"
 edition = "2021"
 description = "AI-powered Bevy game development assistant with GPT/Claude integration"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/jbuehler23/bevy-ai"
-homepage = "https://github.com/jbuehler23/bevy-ai"
-documentation = "https://docs.rs/bevy-ai"
+repository = "https://github.com/jbuehler23/bevy-agent"
+homepage = "https://github.com/jbuehler23/bevy-agent"
+documentation = "https://docs.rs/bevy-agent"
 keywords = ["bevy", "ai", "gamedev", "procedural", "code-generation"]
 categories = ["game-development", "development-tools"]
 authors = ["Joe Buehler <joe@example.com>"]
@@ -21,11 +21,11 @@ exclude = [
 ]
 
 [[bin]]
-name = "bevy-ai"
+name = "bevy-agent"
 path = "src/main.rs"
 
 [lib]
-name = "bevy_ai"
+name = "bevy_agent_agent"
 path = "src/lib.rs"
 
 [features]

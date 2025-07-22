@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Environment (please complete the following information):**
  - OS: [e.g. iOS]
  - Rust version: [e.g. 1.70.0]
- - Bevy-AI version: [e.g. 0.1.0]
+ - bevy-agent version: [e.g. 0.1.0]
  - Bevy version: [e.g. 0.14.0]
 
 **Additional context**

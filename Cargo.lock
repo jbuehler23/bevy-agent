@@ -403,7 +403,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "bevy-ai"
+name = "bevy-agent"
 version = "0.1.0"
 dependencies = [
  "bevy",

@@ -1,6 +1,6 @@
 //! Example showing project management features
 
-use bevy_ai::{Project, BevyAIAgent, AIConfig};
+use bevy_agent::{Project, BevyAIAgent, AIConfig};
 use std::path::PathBuf;
 use tempfile::TempDir;
 

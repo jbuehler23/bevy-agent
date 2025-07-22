@@ -1,6 +1,6 @@
-# Contributing to Bevy AI
+# Contributing to Bevy AI Agent
 
-Thank you for your interest in contributing to Bevy AI! This document provides guidelines and information for contributors.
+Thank you for your interest in contributing to Bevy AI Agent! This document provides guidelines and information for contributors.
 
 ## Code of Conduct
 
@@ -43,8 +43,8 @@ This project adheres to a [Code of Conduct](CODE_OF_CONDUCT.md). By participatin
 
 ```bash
 # Clone the repository
-git clone https://github.com/jbuehler23/bevy-ai.git
-cd bevy-ai
+git clone https://github.com/jbuehler23/bevy-agent.git
+cd bevy-agent
 
 # Install dependencies and build
 cargo build
@@ -144,7 +144,7 @@ Examples:
 ### Project Structure
 
 ```
-bevy-ai/
+bevy-agent/
 ├── src/
 │   ├── ai/          # AI provider implementations
 │   ├── cli/         # Command-line interface

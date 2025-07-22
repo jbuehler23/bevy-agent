@@ -1,4 +1,7 @@
 //! Command-line interface for Bevy AI
+//! 
+//! This module provides a comprehensive CLI for interacting with the Bevy AI system.
+//! It supports game creation, feature addition, code improvement, debugging, and project management.
 
 use crate::{
     ai::BevyAIAgent,
@@ -12,12 +15,13 @@ use clap::{Parser, Subcommand, ValueEnum};
 use std::path::PathBuf;
 use tracing::{error, info, warn};
 
-/// Bevy AI - AI-powered Bevy game development assistant
+/// Bevy AI Agent - AI-powered Bevy game development assistant
 #[derive(Parser)]
-#[command(name = "bevy-ai")]
+#[command(name = "bevy-agent")]
 #[command(about = "AI-powered Bevy game prototyping assistant with GPT/Claude integration")]
 #[command(version = crate::VERSION)]
 pub struct Cli {
+    /// The command to execute
     #[command(subcommand)]
     pub command: Commands,
     
@@ -30,6 +34,7 @@ pub struct Cli {
     pub config: Option<PathBuf>,
 }
 
+/// Available CLI commands
 #[derive(Subcommand)]
 pub enum Commands {
     /// Generate a new game prototype from natural language description
@@ -170,23 +175,27 @@ pub enum Commands {
     
     /// Build operations
     Build {
+        /// Build operation to perform
         #[command(subcommand)]
         operation: BuildOperation,
     },
     
     /// Project management commands
     Project {
+        /// Project operation to perform
         #[command(subcommand)]
         operation: ProjectOperation,
     },
     
     /// Template management commands
     Template {
+        /// Template operation to perform
         #[command(subcommand)]
         operation: TemplateOperation,
     },
 }
 
+/// Build and development operations
 #[derive(Subcommand)]
 pub enum BuildOperation {
     /// Build the current prototype
@@ -244,6 +253,7 @@ pub enum BuildOperation {
     },
 }
 
+/// Project management operations
 #[derive(Subcommand)]
 pub enum ProjectOperation {
     /// Show project information
@@ -297,6 +307,7 @@ pub enum ProjectOperation {
     },
 }
 
+/// Template management operations
 #[derive(Subcommand)]
 pub enum TemplateOperation {
     /// List available templates
@@ -331,23 +342,37 @@ pub enum TemplateOperation {
     },
 }
 
+/// Aspects of code that can be improved
 #[derive(ValueEnum, Clone, Debug)]
 pub enum ImprovementAspect {
+    /// Improve code performance and efficiency
     Performance,
+    /// Improve code readability and maintainability
     Readability,
+    /// Add or improve features
     Features,
+    /// Improve code structure and organization
     Structure,
+    /// Add or improve tests
     Testing,
+    /// Add or improve documentation
     Documentation,
+    /// Improve security aspects
     Security,
+    /// Improve overall efficiency
     Efficiency,
 }
 
+/// Export formats for project data
 #[derive(ValueEnum, Clone, Debug)]
 pub enum ExportFormat {
+    /// JSON format
     Json,
+    /// YAML format
     Yaml,
+    /// TOML format
     Toml,
+    /// Markdown format
     Markdown,
 }
 
@@ -391,11 +416,11 @@ impl CliHandler {
         // Initialize logging
         if cli.verbose {
             tracing_subscriber::fmt()
-                .with_env_filter("bevy_ai=debug")
+                .with_env_filter("bevy_agent=debug")
                 .init();
         } else {
             tracing_subscriber::fmt()
-                .with_env_filter("bevy_ai=info")
+                .with_env_filter("bevy_agent=info")
                 .init();
         }
         
@@ -436,7 +461,7 @@ impl CliHandler {
     async fn handle_create(
         &mut self,
         description: String,
-        model: Option<ModelType>,
+        _model: Option<ModelType>,
         name: Option<String>,
         output: Option<PathBuf>,
         template: Option<String>,
@@ -483,7 +508,7 @@ impl CliHandler {
         Ok(())
     }
     
-    async fn handle_add(&mut self, feature: String, model: Option<ModelType>, project: Option<PathBuf>) -> Result<()> {
+    async fn handle_add(&mut self, feature: String, _model: Option<ModelType>, project: Option<PathBuf>) -> Result<()> {
         let agent = self.agent.as_ref()
             .ok_or_else(|| BevyAIError::ai_api("No AI agent available. Please configure API keys.".to_string()))?;
         
@@ -506,7 +531,7 @@ impl CliHandler {
     async fn handle_improve(
         &mut self,
         aspect: ImprovementAspect,
-        model: Option<ModelType>,
+        _model: Option<ModelType>,
         file: Option<PathBuf>,
         project: Option<PathBuf>,
     ) -> Result<()> {
@@ -526,7 +551,7 @@ impl CliHandler {
         
         let response = agent
             .improve_code(aspect.to_string(), code)
-            .with_model(model.unwrap_or(self.config.default_model.clone()))
+            .with_model(_model.unwrap_or(self.config.default_model.clone()))
             .execute()
             .await?;
         
@@ -550,7 +575,7 @@ impl CliHandler {
     
     async fn handle_explain(
         &mut self,
-        model: Option<ModelType>,
+        _model: Option<ModelType>,
         file: Option<PathBuf>,
         project: Option<PathBuf>,
     ) -> Result<()> {
@@ -570,7 +595,7 @@ impl CliHandler {
         
         let response = agent
             .explain_code(code)
-            .with_model(model.unwrap_or(self.config.default_model.clone()))
+            .with_model(_model.unwrap_or(self.config.default_model.clone()))
             .execute()
             .await?;
         
@@ -587,7 +612,7 @@ impl CliHandler {
     async fn handle_debug(
         &mut self,
         error: String,
-        model: Option<ModelType>,
+        _model: Option<ModelType>,
         file: Option<PathBuf>,
         project: Option<PathBuf>,
     ) -> Result<()> {
@@ -607,7 +632,7 @@ impl CliHandler {
         
         let response = agent
             .debug_code(code, error)
-            .with_model(model.unwrap_or(self.config.default_model.clone()))
+            .with_model(_model.unwrap_or(self.config.default_model.clone()))
             .execute()
             .await?;
         
@@ -666,7 +691,7 @@ impl CliHandler {
         
         info!("✅ Project '{}' initialized successfully!", name);
         info!("📁 Project location: {}", project_path.display());
-        info!("🚀 To get started: cd {} && bevy-ai add \"your first feature\"", project_path.display());
+        info!("🚀 To get started: cd {} && bevy-agent add \"your first feature\"", project_path.display());
         
         Ok(())
     }
@@ -755,7 +780,7 @@ impl CliHandler {
     
     async fn handle_build_operation(&self, operation: BuildOperation) -> Result<()> {
         match operation {
-            BuildOperation::Build { project, release } => {
+            BuildOperation::Build { project, release: _ } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
                 info!("🔨 Building project...");
                 
@@ -767,7 +792,7 @@ impl CliHandler {
                     println!("{}", result);
                 }
             }
-            BuildOperation::Run { project, release, args } => {
+            BuildOperation::Run { project, release: _, args: _ } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
                 info!("🚀 Running project...");
                 
@@ -800,7 +825,7 @@ impl CliHandler {
                 info!("{}", result);
             }
             BuildOperation::Test { project } => {
-                let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
+                let _project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
                 info!("🧪 Running tests...");
                 
                 // TODO: Implement test running
@@ -864,7 +889,7 @@ impl CliHandler {
                     }
                 }
             }
-            ProjectOperation::Export { output, project, format } => {
+            ProjectOperation::Export { output: _, project: _, format: _ } => {
                 // TODO: Implement project export
                 info!("Project export not yet implemented");
             }
@@ -890,7 +915,7 @@ impl CliHandler {
     async fn handle_template_operation(&self, operation: TemplateOperation) -> Result<()> {
         match operation {
             TemplateOperation::List => {
-                let manager = TemplateManager::new()?;
+                let _manager = TemplateManager::new()?;
                 let templates = TemplateManager::builtin_templates();
                 
                 println!("📝 Available Templates:");
@@ -913,11 +938,11 @@ impl CliHandler {
                     error!("Template '{}' not found", name);
                 }
             }
-            TemplateOperation::Create { name, description, file } => {
+            TemplateOperation::Create { name: _, description: _, file: _ } => {
                 // TODO: Implement custom template creation
                 info!("Custom template creation not yet implemented");
             }
-            TemplateOperation::Apply { name, project } => {
+            TemplateOperation::Apply { name: _, project: _ } => {
                 // TODO: Implement template application
                 info!("Template application not yet implemented");
             }

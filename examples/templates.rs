@@ -1,7 +1,7 @@
 //! Example using game templates instead of AI generation
 
-use bevy_ai::game_templates::{TemplateManager, TemplateContext};
-use bevy_ai::Result;
+use bevy_agent::game_templates::{TemplateManager, TemplateContext};
+use bevy_agent::Result;
 
 #[tokio::main]
 async fn main() -> Result<()> {

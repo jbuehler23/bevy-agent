@@ -10,10 +10,10 @@
 //! # Example
 //! 
 //! ```rust,no_run
-//! use bevy_ai::ai::{BevyAIAgent, ModelType};
-//! use bevy_ai::config::AIConfig;
+//! use bevy_agent::ai::{BevyAIAgent, ModelType};
+//! use bevy_agent::config::AIConfig;
 //! 
-//! # async fn example() -> bevy_ai::Result<()> {
+//! # async fn example() -> bevy_agent::Result<()> {
 //! let config = AIConfig::default();
 //! let agent = BevyAIAgent::new(config).await?;
 //! 

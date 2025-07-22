@@ -56,7 +56,7 @@ impl ProjectManager {
         // Create basic main.rs
         self.create_main_rs().await?;
         
-        // Create .bevy-ai.json config
+        // Create .bevy-agent.json config
         let metadata = ProjectMetadata {
             name: name.to_string(),
             description: description.to_string(),
@@ -84,7 +84,7 @@ impl ProjectManager {
     
     /// Load existing project configuration
     pub async fn load(&mut self) -> Result<()> {
-        let config_path = self.project_path.join(".bevy-ai.json");
+        let config_path = self.project_path.join(".bevy-agent.json");
         
         if !config_path.exists() {
             return Err(BevyAIError::project_not_found(self.project_path.display().to_string()));
@@ -99,7 +99,7 @@ impl ProjectManager {
     
     /// Save project configuration
     pub async fn save_config(&self, config: &ProjectConfig) -> Result<()> {
-        let config_path = self.project_path.join(".bevy-ai.json");
+        let config_path = self.project_path.join(".bevy-agent.json");
         let content = serde_json::to_string_pretty(config)?;
         fs::write(&config_path, content)?;
         Ok(())
