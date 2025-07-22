@@ -26,7 +26,7 @@ jobs:
     - name: Build documentation
       run: |
         cargo doc --all-features --no-deps --document-private-items
-        echo '<meta http-equiv="refresh" content="0; url=bevy_agent_agent">' > target/doc/index.html
+        echo '<meta http-equiv="refresh" content="0; url=bevy_agent">' > target/doc/index.html
 
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'

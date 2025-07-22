@@ -27,10 +27,15 @@ pub struct AIRequest {
 /// Response from AI models
 #[derive(Debug, Clone)]
 pub struct AIResponse {
+    /// The generated content from the AI model
     pub content: String,
+    /// The model that generated this response
     pub model: ModelType,
+    /// Number of tokens used in the request (if available)
     pub tokens_used: Option<u32>,
+    /// Reason why the generation finished (if available)
     pub finish_reason: Option<String>,
+    /// Unique identifier for this conversation
     pub conversation_id: uuid::Uuid,
 }
 

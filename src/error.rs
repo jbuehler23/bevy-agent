@@ -8,65 +8,123 @@ pub type Result<T> = std::result::Result<T, BevyAIError>;
 /// Main error type for Bevy AI operations
 #[derive(Error, Debug)]
 pub enum BevyAIError {
+    /// Configuration-related errors
     #[error("Configuration error: {0}")]
     Config(#[from] config::ConfigError),
     
+    /// HTTP request errors
     #[error("HTTP request failed: {0}")]
     Http(#[from] reqwest::Error),
     
+    /// JSON serialization/deserialization errors  
     #[error("JSON serialization/deserialization error: {0}")]
     Json(#[from] serde_json::Error),
     
+    /// Input/output errors
     #[error("IO error: {0}")]
     Io(#[from] std::io::Error),
     
+    /// File system traversal errors
     #[error("File traversal error: {0}")]
     WalkDir(#[from] walkdir::Error),
     
+    /// Template rendering errors
     #[error("Template rendering error: {0}")]
     Template(#[from] handlebars::RenderError),
     
+    /// Template creation errors
     #[error("Template creation error: {0}")]
     TemplateCreation(#[from] handlebars::TemplateError),
     
+    /// Code parsing errors
     #[error("Code parsing error: {0}")]
     CodeParsing(String),
     
+    /// AI API communication errors
     #[error("AI API error: {message}")]
-    AIApi { message: String },
+    AIApi { 
+        /// The error message from the AI API
+        message: String 
+    },
     
+    /// Missing API key errors
     #[error("API key not configured for {provider}")]
-    MissingApiKey { provider: String },
+    MissingApiKey { 
+        /// The AI provider that requires an API key
+        provider: String 
+    },
     
+    /// Unsupported model errors
     #[error("Unsupported AI model: {model}")]
-    UnsupportedModel { model: String },
+    UnsupportedModel { 
+        /// The unsupported model name
+        model: String 
+    },
     
+    /// Project not found errors
     #[error("Project not found at path: {path}")]
-    ProjectNotFound { path: String },
+    ProjectNotFound { 
+        /// The path where the project was expected
+        path: String 
+    },
     
+    /// Invalid project structure errors
     #[error("Invalid project structure: {reason}")]
-    InvalidProject { reason: String },
+    InvalidProject { 
+        /// The reason why the project is invalid
+        reason: String 
+    },
     
+    /// Feature generation errors
     #[error("Feature generation failed: {reason}")]
-    FeatureGeneration { reason: String },
+    FeatureGeneration { 
+        /// The reason why feature generation failed
+        reason: String 
+    },
     
+    /// Code optimization errors
     #[error("Code optimization failed: {reason}")]
-    CodeOptimization { reason: String },
+    CodeOptimization { 
+        /// The reason why code optimization failed
+        reason: String 
+    },
     
+    /// File operation errors
     #[error("File operation failed: {operation} on {path}")]
-    FileOperation { operation: String, path: String },
+    FileOperation { 
+        /// The operation that failed
+        operation: String, 
+        /// The path where the operation failed
+        path: String 
+    },
     
+    /// Template not found errors
     #[error("Template not found: {name}")]
-    TemplateNotFound { name: String },
+    TemplateNotFound { 
+        /// The name of the template that wasn't found
+        name: String 
+    },
     
+    /// Dependency resolution errors
     #[error("Dependency resolution failed: {dependency}")]
-    DependencyResolution { dependency: String },
+    DependencyResolution { 
+        /// The dependency that couldn't be resolved
+        dependency: String 
+    },
     
+    /// Build system errors
     #[error("Build system error: {message}")]
-    BuildSystem { message: String },
+    BuildSystem { 
+        /// The build system error message
+        message: String 
+    },
     
+    /// Validation errors
     #[error("Validation error: {message}")]
-    Validation { message: String },
+    Validation { 
+        /// The validation error message
+        message: String 
+    },
 }
 
 impl BevyAIError {

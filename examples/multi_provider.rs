@@ -5,30 +5,30 @@ use bevy_agent::config::{OpenAIConfig, AnthropicConfig, GoogleConfig};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    println!("🧪 Testing different AI providers for Bevy game generation\n");
+    println!("Testing different AI providers for Bevy game generation\n");
     
     // Test OpenAI GPT-4
     if let Ok(config) = create_openai_config() {
-        println!("🤖 Testing OpenAI GPT-4...");
+        println!("Testing OpenAI GPT-4...");
         test_provider(config, "OpenAI GPT-4").await?;
     } else {
-        println!("⚠️  OpenAI API key not found in environment");
+        println!("OpenAI API key not found in environment");
     }
     
     // Test Anthropic Claude
     if let Ok(config) = create_anthropic_config() {
-        println!("🧠 Testing Anthropic Claude...");
+        println!("Testing Anthropic Claude...");
         test_provider(config, "Anthropic Claude").await?;
     } else {
-        println!("⚠️  Anthropic API key not found in environment");
+        println!("Anthropic API key not found in environment");
     }
     
     // Test Google Gemini
     if let Ok(config) = create_google_config() {
-        println!("💎 Testing Google Gemini...");
+        println!("Testing Google Gemini...");
         test_provider(config, "Google Gemini").await?;
     } else {
-        println!("⚠️  Google API key not found in environment");
+        println!("Google API key not found in environment");
     }
     
     Ok(())
@@ -90,14 +90,14 @@ async fn test_provider(config: AIConfig, provider_name: &str) -> Result<()> {
     
     match request.execute().await {
         Ok(response) => {
-            println!("✅ {} response:", provider_name);
+            println!("{} response:", provider_name);
             println!("   Length: {} characters", response.content.len());
             println!("   Preview: {}\n", 
                 response.content.chars().take(100).collect::<String>()
                     .replace('\n', " "));
         },
         Err(e) => {
-            println!("❌ {} failed: {}\n", provider_name, e);
+            println!("{} failed: {}\n", provider_name, e);
         }
     }
     

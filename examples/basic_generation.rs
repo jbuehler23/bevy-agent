@@ -11,7 +11,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let agent = BevyAIAgent::new(config).await?;
     
     // Generate a simple game
-    println!("🤖 Generating a simple 2D shooter game...");
+    println!("Generating a simple 2D shooter game...");
     
     let response = agent
         .generate_game("A simple 2D shooter with enemies and power-ups")
@@ -19,11 +19,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .execute()
         .await?;
     
-    println!("✅ Generated game code!");
-    println!("📝 Code:\n{}", response.content);
+    println!("Generated game code!");
+    println!("Code:\n{}", response.content);
     
     if let Some(tokens) = response.tokens_used {
-        println!("🔢 Tokens used: {}", tokens);
+        println!("Tokens used: {}", tokens);
     }
     
     Ok(())

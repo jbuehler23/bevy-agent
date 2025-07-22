@@ -253,53 +253,81 @@ pub struct ProjectMetadata {
 /// Conversation history entry
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ConversationEntry {
+    /// Unique identifier for this conversation
     pub id: uuid::Uuid,
+    /// The user's request/prompt
     pub request: String,
+    /// The AI's response
     pub response: String,
+    /// The AI model that was used
     pub model_used: ModelType,
+    /// When this conversation occurred
     pub timestamp: chrono::DateTime<chrono::Utc>,
+    /// Number of tokens used (if available)
     pub tokens_used: Option<u32>,
+    /// Cost of the API call (if available)
     pub cost: Option<f64>,
+    /// List of files that were modified in this conversation
     pub files_modified: Vec<String>,
 }
 
 /// Generated file tracking
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GeneratedFile {
+    /// Path to the generated file
     pub path: String,
+    /// What generated this file (e.g., "AI", "template")
     pub generator: String,
+    /// The AI model that generated this file
     pub model: ModelType,
+    /// When this file was created
     pub created_at: chrono::DateTime<chrono::Utc>,
+    /// File checksum for integrity verification
     pub checksum: String,
 }
 
 /// Dependency information
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Dependency {
+    /// Name of the dependency
     pub name: String,
+    /// Version requirement for the dependency
     pub version: String,
+    /// Features to enable for this dependency
     pub features: Vec<String>,
+    /// Reason why this dependency was added
     pub reason: String,
+    /// Which AI model added this dependency
     pub added_by: ModelType,
+    /// When this dependency was added
     pub added_at: chrono::DateTime<chrono::Utc>,
 }
 
 /// Custom template definition
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CustomTemplate {
+    /// Name of the template
     pub name: String,
+    /// Description of what this template does
     pub description: String,
+    /// Path to the template file
     pub template_path: String,
+    /// Variables that can be customized in this template
     pub variables: Vec<TemplateVariable>,
+    /// When this template was created
     pub created_at: chrono::DateTime<chrono::Utc>,
 }
 
 /// Template variable definition
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TemplateVariable {
+    /// Name of the variable
     pub name: String,
+    /// Description of what this variable is for
     pub description: String,
+    /// Default value for this variable (if any)
     pub default_value: Option<String>,
+    /// Whether this variable is required
     pub required: bool,
 }
 

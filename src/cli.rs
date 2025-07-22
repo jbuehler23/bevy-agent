@@ -477,7 +477,7 @@ impl CliHandler {
             output.unwrap_or_else(|| std::env::current_dir().unwrap().join(&project_name))
         };
         
-        info!("🤖 Creating game '{}' from description: {}", project_name, description);
+        info!("Creating game '{}' from description: {}", project_name, description);
         
         if let Some(template_name) = template {
             // Use template-based generation
@@ -496,12 +496,12 @@ impl CliHandler {
             let mut project = Project::init(project_path.clone(), &project_name, &description, agent.clone()).await?;
             let response = project.generate_game(&description).await?;
             
-            info!("✅ Game '{}' created successfully!", project_name);
-            info!("📁 Project location: {}", project_path.display());
-            info!("🚀 To run: cd {} && cargo run", project_path.display());
+            info!("Game '{}' created successfully!", project_name);
+            info!("Project location: {}", project_path.display());
+            info!("To run: cd {} && cargo run", project_path.display());
             
             if let Some(tokens) = response.tokens_used {
-                info!("🔢 Tokens used: {}", tokens);
+                info!("Tokens used: {}", tokens);
             }
         }
         
@@ -514,15 +514,15 @@ impl CliHandler {
         
         let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
         
-        info!("🤖 Adding feature: {}", feature);
+        info!("Adding feature: {}", feature);
         
         let mut project = Project::new(project_path, agent.clone()).await?;
         let response = project.add_feature(&feature).await?;
         
-        info!("✅ Feature added successfully!");
+        info!("Feature added successfully!");
         
         if let Some(tokens) = response.tokens_used {
-            info!("🔢 Tokens used: {}", tokens);
+            info!("Tokens used: {}", tokens);
         }
         
         Ok(())
@@ -547,7 +547,7 @@ impl CliHandler {
         
         let code = std::fs::read_to_string(&file_path)?;
         
-        info!("🤖 Improving {} of {}", aspect, file_path.display());
+        info!("Improving {} of {}", aspect, file_path.display());
         
         let response = agent
             .improve_code(aspect.to_string(), code)
@@ -563,11 +563,11 @@ impl CliHandler {
         // Write improved code
         std::fs::write(&file_path, improved_code)?;
         
-        info!("✅ Code improved successfully!");
-        info!("📝 Backup created for original file");
+        info!("Code improved successfully!");
+        info!("Backup created for original file");
         
         if let Some(tokens) = response.tokens_used {
-            info!("🔢 Tokens used: {}", tokens);
+            info!("Tokens used: {}", tokens);
         }
         
         Ok(())
@@ -591,7 +591,7 @@ impl CliHandler {
         
         let code = std::fs::read_to_string(&file_path)?;
         
-        info!("🤖 Explaining code in {}", file_path.display());
+        info!("Explaining code in {}", file_path.display());
         
         let response = agent
             .explain_code(code)
@@ -599,11 +599,11 @@ impl CliHandler {
             .execute()
             .await?;
         
-        println!("\n🤖 AI Code Explanation:\n");
+        println!("\nAI Code Explanation:\n");
         println!("{}", response.content);
         
         if let Some(tokens) = response.tokens_used {
-            info!("🔢 Tokens used: {}", tokens);
+            info!("Tokens used: {}", tokens);
         }
         
         Ok(())
@@ -628,7 +628,7 @@ impl CliHandler {
         
         let code = std::fs::read_to_string(&file_path)?;
         
-        info!("🤖 Debugging issue: {}", error);
+        info!("Debugging issue: {}", error);
         
         let response = agent
             .debug_code(code, error)
@@ -636,13 +636,13 @@ impl CliHandler {
             .execute()
             .await?;
         
-        println!("\n🔧 AI Debug Analysis:\n");
+        println!("\nAI Debug Analysis:\n");
         println!("{}", response.content);
         
         // Extract and offer to apply fixed code
         let fixed_code = agent.extract_code(&response.content);
         if fixed_code != response.content {
-            println!("\n❓ Apply the suggested fix? [y/N]");
+            println!("\nApply the suggested fix? [y/N]");
             let mut input = String::new();
             std::io::stdin().read_line(&mut input)?;
             
@@ -653,13 +653,13 @@ impl CliHandler {
                 // Write fixed code
                 std::fs::write(&file_path, fixed_code)?;
                 
-                info!("✅ Fix applied successfully!");
-                info!("📝 Backup created for original file");
+                info!("Fix applied successfully!");
+                info!("Backup created for original file");
             }
         }
         
         if let Some(tokens) = response.tokens_used {
-            info!("🔢 Tokens used: {}", tokens);
+            info!("Tokens used: {}", tokens);
         }
         
         Ok(())
@@ -675,7 +675,7 @@ impl CliHandler {
         let description = description.unwrap_or_else(|| format!("A new Bevy game: {}", name));
         let project_path = output.unwrap_or_else(|| std::env::current_dir().unwrap().join(&name));
         
-        info!("🚀 Initializing new Bevy AI project: {}", name);
+        info!("Initializing new Bevy AI project: {}", name);
         
         let mut project_manager = ProjectManager::new(&project_path);
         project_manager.init(&name, &description).await?;
@@ -686,12 +686,12 @@ impl CliHandler {
             let code = template_manager.generate(&template_name, &context)?;
             
             std::fs::write(project_path.join("src/main.rs"), code)?;
-            info!("📝 Applied template: {}", template_name);
+            info!("Applied template: {}", template_name);
         }
         
-        info!("✅ Project '{}' initialized successfully!", name);
-        info!("📁 Project location: {}", project_path.display());
-        info!("🚀 To get started: cd {} && bevy-agent add \"your first feature\"", project_path.display());
+        info!("Project '{}' initialized successfully!", name);
+        info!("Project location: {}", project_path.display());
+        info!("To get started: cd {} && bevy-agent add \"your first feature\"", project_path.display());
         
         Ok(())
     }
@@ -706,10 +706,10 @@ impl CliHandler {
         validate: bool,
     ) -> Result<()> {
         if show {
-            println!("🔧 Current Configuration:");
-            println!("OpenAI: {}", if self.config.openai.is_some() { "✅ Configured" } else { "❌ Not configured" });
-            println!("Anthropic: {}", if self.config.anthropic.is_some() { "✅ Configured" } else { "❌ Not configured" });
-            println!("Google: {}", if self.config.google.is_some() { "✅ Configured" } else { "❌ Not configured" });
+            println!("Current Configuration:");
+            println!("OpenAI: {}", if self.config.openai.is_some() { "Configured" } else { "Not configured" });
+            println!("Anthropic: {}", if self.config.anthropic.is_some() { "Configured" } else { "Not configured" });
+            println!("Google: {}", if self.config.google.is_some() { "Configured" } else { "Not configured" });
             println!("Default Model: {}", self.config.default_model);
             println!("Available Models: {:?}", self.config.available_models());
             return Ok(());
@@ -718,9 +718,9 @@ impl CliHandler {
         if validate {
             let warnings = config_utils::validate_config(&self.config)?;
             if warnings.is_empty() {
-                info!("✅ Configuration is valid");
+                info!("Configuration is valid");
             } else {
-                warn!("⚠️ Configuration warnings:");
+                warn!("Configuration warnings:");
                 for warning in warnings {
                     warn!("  - {}", warning);
                 }
@@ -736,7 +736,7 @@ impl CliHandler {
                 organization: None,
                 base_url: None,
             });
-            info!("✅ OpenAI API key configured");
+            info!("OpenAI API key configured");
             updated = true;
         }
         
@@ -745,7 +745,7 @@ impl CliHandler {
                 api_key: key,
                 base_url: None,
             });
-            info!("✅ Anthropic API key configured");
+            info!("Anthropic API key configured");
             updated = true;
         }
         
@@ -754,13 +754,13 @@ impl CliHandler {
                 api_key: key,
                 base_url: None,
             });
-            info!("✅ Google API key configured");
+            info!("Google API key configured");
             updated = true;
         }
         
         if let Some(model) = default_model {
             self.config.default_model = model;
-            info!("✅ Default model set to: {}", self.config.default_model);
+            info!("Default model set to: {}", self.config.default_model);
             updated = true;
         }
         
@@ -782,19 +782,19 @@ impl CliHandler {
         match operation {
             BuildOperation::Build { project, release: _ } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("🔨 Building project...");
+                info!("Building project...");
                 
                 let manager = ProjectManager::new(&project_path);
                 let result = manager.build().await?;
                 
-                info!("✅ Build completed successfully!");
+                info!("Build completed successfully!");
                 if !result.is_empty() {
                     println!("{}", result);
                 }
             }
             BuildOperation::Run { project, release: _, args: _ } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("🚀 Running project...");
+                info!("Running project...");
                 
                 let manager = ProjectManager::new(&project_path);
                 let result = manager.run().await?;
@@ -805,21 +805,21 @@ impl CliHandler {
             }
             BuildOperation::Check { project } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("🔍 Checking code...");
+                info!("Checking code...");
                 
                 let result = build_utils::cargo_check(&project_path)?;
                 println!("{}", result);
             }
             BuildOperation::Clippy { project } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("📎 Running clippy...");
+                info!("Running clippy...");
                 
                 let result = build_utils::cargo_clippy(&project_path)?;
                 println!("{}", result);
             }
             BuildOperation::Format { project } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("🎨 Formatting code...");
+                info!("Formatting code...");
                 
                 let result = build_utils::cargo_fmt(&project_path)?;
                 info!("{}", result);
@@ -844,7 +844,7 @@ impl CliHandler {
                 manager.load().await?;
                 
                 if let Some(config) = manager.config() {
-                    println!("📋 Project Information:");
+                    println!("Project Information:");
                     println!("Name: {}", config.metadata.name);
                     println!("Description: {}", config.metadata.description);
                     println!("Version: {}", config.metadata.version);
@@ -861,7 +861,7 @@ impl CliHandler {
                 let manager = ProjectManager::new(&project_path);
                 let stats = manager.stats().await?;
                 
-                println!("📊 Project Statistics:");
+                println!("Project Statistics:");
                 println!("Lines of Code: {}", stats.lines_of_code);
                 println!("Rust Files: {}", stats.rust_files);
                 println!("AI Conversations: {}", stats.conversations);
@@ -877,14 +877,14 @@ impl CliHandler {
                 if let Some(config) = manager.config() {
                     println!("📜 Conversation History (last {}):", limit);
                     for conversation in config.conversations.iter().rev().take(limit) {
-                        println!("\n🕐 {} ({})", 
+                        println!("\n{} ({})", 
                                conversation.timestamp.format("%Y-%m-%d %H:%M:%S"),
                                conversation.model_used);
                         println!("👤 Request: {}", conversation.request);
-                        println!("🤖 Response: {}...", 
+                        println!("AI Response: {}...", 
                                conversation.response.chars().take(100).collect::<String>());
                         if let Some(tokens) = conversation.tokens_used {
-                            println!("🔢 Tokens: {}", tokens);
+                            println!("Tokens: {}", tokens);
                         }
                     }
                 }
@@ -895,17 +895,17 @@ impl CliHandler {
             }
             ProjectOperation::Clean { project, cargo } => {
                 let project_path = project.unwrap_or_else(|| std::env::current_dir().unwrap());
-                info!("🧹 Cleaning project...");
+                info!("Cleaning project...");
                 
                 if cargo {
                     std::process::Command::new("cargo")
                         .arg("clean")
                         .current_dir(&project_path)
                         .output()?;
-                    info!("✅ Cargo artifacts cleaned");
+                    info!("Cargo artifacts cleaned");
                 }
                 
-                info!("✅ Project cleaned");
+                info!("Project cleaned");
             }
         }
         
@@ -918,7 +918,7 @@ impl CliHandler {
                 let _manager = TemplateManager::new()?;
                 let templates = TemplateManager::builtin_templates();
                 
-                println!("📝 Available Templates:");
+                println!("Available Templates:");
                 for template in templates {
                     println!("  {} - {} ({})", 
                            template.name, 
@@ -929,7 +929,7 @@ impl CliHandler {
             TemplateOperation::Show { name } => {
                 let templates = TemplateManager::builtin_templates();
                 if let Some(template) = templates.iter().find(|t| t.name == name) {
-                    println!("📝 Template: {}", template.name);
+                    println!("Template: {}", template.name);
                     println!("Description: {}", template.description);
                     println!("Category: {}", template.category);
                     println!("Dependencies: {}", template.dependencies.join(", "));

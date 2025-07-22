@@ -47,7 +47,7 @@
 //! ### Basic AI Agent Usage
 //! 
 //! ```rust,no_run
-//! use bevy_agent_agent::{BevyAIAgent, AIConfig};
+//! use bevy_agent::{BevyAIAgent, AIConfig};
 //! use bevy_agent::config::OpenAIConfig;
 //! 
 //! #[tokio::main]
@@ -80,10 +80,10 @@
 //! ### Using Game Templates
 //! 
 //! ```rust,no_run
-//! use bevy_agent_agent::game_templates::{TemplateManager, TemplateContext};
+//! use bevy_agent::game_templates::{TemplateManager, TemplateContext};
 //! 
 //! #[tokio::main]
-//! async fn main() -> bevy_agent_agent::Result<()> {
+//! async fn main() -> bevy_agent::Result<()> {
 //!     let manager = TemplateManager::new()?;
 //!     
 //!     // List available templates
@@ -132,7 +132,7 @@
 //! All functions return `Result<T, BevyAIError>` for comprehensive error handling:
 //! 
 //! ```rust,no_run
-//! use bevy_agent_agent::{BevyAIError, Result};
+//! use bevy_agent::{BevyAIError, Result};
 //! 
 //! fn handle_errors() -> Result<()> {
 //!     match some_ai_operation() {

@@ -6,7 +6,7 @@ We actively support the following versions of Bevy AI with security updates:
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.1.x   | ✅                |
+| 0.1.x   | Supported         |
 
 ## Reporting a Vulnerability
 

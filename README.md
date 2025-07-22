@@ -1,4 +1,4 @@
-# 🧠 Bevy AI Agent - AI-Powered Game Development Assistant
+# Bevy AI Agent - AI-Powered Game Development Assistant
 
 [![Crates.io](https://img.shields.io/crates/v/bevy-agent.svg)](https://crates.io/crates/bevy-agent)
 [![Documentation](https://docs.rs/bevy-agent/badge.svg)](https://docs.rs/bevy-agent)
@@ -9,20 +9,20 @@
 
 Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edge AI models (GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language code generation, intelligent feature addition, and automated code optimization.
 
-## ✨ Features
+## Features
 
-### 🧠 AI Model Integration
+### AI Model Integration
 - **OpenAI**: GPT-4, GPT-4-Turbo, GPT-3.5-turbo
 - **Anthropic**: Claude-3-opus, Claude-3-sonnet, Claude-3-haiku
 - **Google**: Gemini-pro, Gemini-pro-vision
 
-### 🚀 Dynamic Code Generation
+### Dynamic Code Generation
 - No more rigid templates - AI generates contextual, unique code
 - Understands complex game concepts and mechanics
 - Creates complete, working Bevy applications from scratch
 - Context-aware feature additions that integrate seamlessly
 
-### 🎮 Game Development Features
+### Game Development Features
 - **Natural Language Game Creation**: Describe your game in plain English
 - **Intelligent Feature Addition**: Add complex systems with AI assistance
 - **Code Analysis & Optimization**: AI-powered code review and improvements
@@ -30,7 +30,7 @@ Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edg
 - **Template System**: Built-in templates for common game types
 - **Project Management**: Track AI conversations and generated files
 
-## 🛠️ Installation
+## Installation
 
 ### CLI Tool
 ```bash
@@ -45,7 +45,7 @@ bevy-agent = "0.1.0"
 tokio = { version = "1.0", features = ["full"] }
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Configure API Keys
 ```bash
@@ -94,7 +94,7 @@ bevy-agent improve readability
 bevy-agent improve structure
 ```
 
-## 🎯 Advanced Usage
+## Advanced Usage
 
 ### Complex Game Creation
 ```bash
@@ -173,11 +173,11 @@ bevy-agent template show platformer_2d
 bevy-agent create "my platformer" --template platformer_2d
 ```
 
-## 📚 Library Usage
+## Library Usage
 
 ### Basic Usage
 ```rust
-use bevy_agent_agent::{BevyAIAgent, AIConfig, ModelType};
+use bevy_agent::{BevyAIAgent, AIConfig, ModelType};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -197,7 +197,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Advanced Project Management
 ```rust
-use bevy_agent_agent::{Project, BevyAIAgent, AIConfig};
+use bevy_agent::{Project, BevyAIAgent, AIConfig};
 use std::path::PathBuf;
 
 #[tokio::main]
@@ -231,7 +231,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ### Custom AI Requests
 ```rust
-use bevy_agent_agent::{BevyAIAgent, AIConfig, ModelType};
+use bevy_agent::{BevyAIAgent, AIConfig, ModelType};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -252,7 +252,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-## 🎮 Real-World Examples
+## Real-World Examples
 
 ### Metroidvania Game
 ```bash
@@ -284,7 +284,7 @@ Implements:
 - Dynamic obstacle detection
 - AI behavior integration
 
-## 🔧 Configuration
+## Configuration
 
 ### Configuration File
 Bevy AI stores configuration in `~/.bevy-agent-config.json`:
@@ -347,7 +347,7 @@ Each Bevy AI project includes a `.bevy-agent.json` file that tracks:
 - **Explanatory**: Can explain and teach as it generates code
 - **Adaptive**: Handles edge cases and unique requirements
 
-## 🏗️ Architecture
+## Architecture
 
 ### Core Components
 
@@ -392,7 +392,7 @@ Each Bevy AI project includes a `.bevy-agent.json` file that tracks:
 - **Puzzle Game**: Grid-based puzzle mechanics
 - **Strategy Game**: RTS-style unit management and resources
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -438,16 +438,16 @@ at your option.
 - [Issue Tracker](https://github.com/jbuehler23/bevy-agent/issues)
 - [Discussions](https://github.com/jbuehler23/bevy-agent/discussions)
 
-## 📊 Status
+## Status
 
 This project is actively developed and maintained. We aim to support the latest versions of Bevy and provide cutting-edge AI integration for game development.
 
 Current Status:
-- ✅ Core AI integration
-- ✅ Multi-provider support
-- ✅ Project management
-- ✅ Template system
-- ✅ CLI interface
-- 🚧 Web interface (planned)
-- 🚧 IDE plugins (planned)
-- 🚧 Asset generation (planned)
+- Core AI integration ✓
+- Multi-provider support ✓
+- Project management ✓
+- Template system ✓
+- CLI interface ✓
+- Web interface (planned)
+- IDE plugins (planned)
+- Asset generation (planned)

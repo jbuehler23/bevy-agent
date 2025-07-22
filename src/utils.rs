@@ -17,47 +17,77 @@ pub mod code_analysis {
     /// Code structure information
     #[derive(Debug, Clone)]
     pub struct CodeStructure {
+        /// Functions found in the code
         pub functions: Vec<FunctionInfo>,
+        /// Structs found in the code
         pub structs: Vec<StructInfo>,
+        /// Enums found in the code
         pub enums: Vec<EnumInfo>,
+        /// Implementation blocks found in the code
         pub impls: Vec<ImplInfo>,
+        /// Import statements found in the code
         pub imports: Vec<String>,
+        /// Bevy features used in the code
         pub features_used: Vec<String>,
     }
     
+    /// Information about a function
     #[derive(Debug, Clone)]
     pub struct FunctionInfo {
+        /// Name of the function
         pub name: String,
+        /// Whether the function is public
         pub is_public: bool,
+        /// Whether the function is async
         pub is_async: bool,
+        /// Function parameters
         pub parameters: Vec<String>,
+        /// Return type (if any)
         pub return_type: Option<String>,
+        /// Line number where the function is defined
         pub line_number: usize,
     }
     
+    /// Information about a struct
     #[derive(Debug, Clone)]
     pub struct StructInfo {
+        /// Name of the struct
         pub name: String,
+        /// Whether the struct is public
         pub is_public: bool,
+        /// Fields of the struct
         pub fields: Vec<String>,
+        /// Derive attributes on the struct
         pub derives: Vec<String>,
+        /// Line number where the struct is defined
         pub line_number: usize,
     }
     
+    /// Information about an enum
     #[derive(Debug, Clone)]
     pub struct EnumInfo {
+        /// Name of the enum
         pub name: String,
+        /// Whether the enum is public
         pub is_public: bool,
+        /// Variants of the enum
         pub variants: Vec<String>,
+        /// Derive attributes on the enum
         pub derives: Vec<String>,
+        /// Line number where the enum is defined
         pub line_number: usize,
     }
     
+    /// Information about an implementation block
     #[derive(Debug, Clone)]
     pub struct ImplInfo {
+        /// Target type being implemented
         pub target: String,
+        /// Trait being implemented (if any)
         pub trait_name: Option<String>,
+        /// Methods in the implementation
         pub methods: Vec<String>,
+        /// Line number where the impl block starts
         pub line_number: usize,
     }
     

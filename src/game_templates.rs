@@ -13,38 +13,61 @@ pub struct TemplateManager {
 /// Template context for code generation
 #[derive(Debug, Clone)]
 pub struct TemplateContext {
+    /// Name of the project being generated
     pub project_name: String,
+    /// Description of the project
     pub description: String,
+    /// List of features to include
     pub features: Vec<String>,
+    /// List of dependencies to include
     pub dependencies: Vec<String>,
+    /// Bevy version to use
     pub bevy_version: String,
+    /// Custom variables for template substitution
     pub custom_variables: HashMap<String, Value>,
 }
 
 /// Game template definition
 #[derive(Debug, Clone)]
 pub struct GameTemplate {
+    /// Name of the template
     pub name: String,
+    /// Description of what this template creates
     pub description: String,
+    /// Category this template belongs to
     pub category: GameCategory,
+    /// Main Rust code template
     pub main_template: String,
+    /// Additional files to generate (filename -> content)
     pub additional_files: HashMap<String, String>,
+    /// Required dependencies
     pub dependencies: Vec<String>,
+    /// Required Bevy features
     pub features: Vec<String>,
 }
 
 /// Game categories for templates
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum GameCategory {
+    /// 2D/3D platformer games
     Platformer,
+    /// Shooting games (2D/3D)
     Shooter,
+    /// Puzzle and logic games
     Puzzle,
+    /// Strategy and tactical games
     Strategy,
+    /// Role-playing games
     Rpg,
+    /// Racing and driving games
     Racing,
+    /// Simulation games
     Simulation,
+    /// Arcade-style games
     Arcade,
+    /// Educational games
     Educational,
+    /// Experimental and prototype games
     Experimental,
 }
 
