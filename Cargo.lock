@@ -419,7 +419,7 @@ dependencies = [
  "serde_json",
  "syn 2.0.104",
  "tempfile",
- "thiserror 1.0.69",
+ "thiserror 2.0.12",
  "tokio",
  "toml",
  "tracing",
