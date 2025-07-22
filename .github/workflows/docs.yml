@@ -1,0 +1,56 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  docs:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Configure Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Build documentation
+      run: |
+        cargo doc --all-features --no-deps --document-private-items
+        echo '<meta http-equiv="refresh" content="0; url=bevy_ai">' > target/doc/index.html
+
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./target/doc
+        cname: docs.bevy-ai.dev  # Optional: if you have a custom domain
+
+  check-docs:
+    name: Check Documentation Links
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Configure Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Check documentation
+      run: cargo doc --all-features --no-deps
+
+    - name: Test documentation examples
+      run: cargo test --doc --all-features

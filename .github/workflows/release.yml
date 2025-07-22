@@ -1,0 +1,111 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test Before Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Configure Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Run tests
+      run: cargo test --all-features
+
+    - name: Check examples
+      run: cargo check --examples
+
+  publish:
+    name: Publish to crates.io
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Configure Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Verify version matches tag
+      run: |
+        CARGO_VERSION=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[0].version')
+        TAG_VERSION=${GITHUB_REF#refs/tags/v}
+        if [ "$CARGO_VERSION" != "$TAG_VERSION" ]; then
+          echo "Version mismatch: Cargo.toml has $CARGO_VERSION, tag is $TAG_VERSION"
+          exit 1
+        fi
+
+    - name: Login to crates.io
+      run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
+
+    - name: Publish to crates.io
+      run: cargo publish
+
+  create-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: publish
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Configure Rust cache
+      uses: Swatinem/rust-cache@v2
+
+    - name: Build release binaries
+      run: |
+        # Build for different targets
+        rustup target add x86_64-unknown-linux-gnu
+        rustup target add x86_64-pc-windows-gnu
+        rustup target add x86_64-apple-darwin
+        
+        cargo build --release --target x86_64-unknown-linux-gnu
+        cargo build --release --target x86_64-pc-windows-gnu --no-default-features
+        
+        # Create archives
+        mkdir -p release-assets
+        
+        # Linux
+        tar -czf release-assets/bevy-ai-linux-x64.tar.gz -C target/x86_64-unknown-linux-gnu/release bevy-ai
+        
+        # Windows (if cross-compilation works)
+        if [ -f target/x86_64-pc-windows-gnu/release/bevy-ai.exe ]; then
+          zip -j release-assets/bevy-ai-windows-x64.zip target/x86_64-pc-windows-gnu/release/bevy-ai.exe
+        fi
+
+    - name: Generate changelog
+      run: |
+        TAG_VERSION=${GITHUB_REF#refs/tags/v}
+        echo "# Release v$TAG_VERSION" > RELEASE_NOTES.md
+        echo "" >> RELEASE_NOTES.md
+        echo "## Changes" >> RELEASE_NOTES.md
+        git log --pretty=format:"- %s" $(git describe --tags --abbrev=0 HEAD~1)..HEAD >> RELEASE_NOTES.md
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        body_path: RELEASE_NOTES.md
+        files: release-assets/*
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

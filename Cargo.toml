@@ -1,0 +1,89 @@
+[package]
+name = "bevy-ai"
+version = "0.1.0"
+edition = "2021"
+description = "AI-powered Bevy game development assistant with GPT/Claude integration"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/jbuehler23/bevy-ai"
+homepage = "https://github.com/jbuehler23/bevy-ai"
+documentation = "https://docs.rs/bevy-ai"
+keywords = ["bevy", "ai", "gamedev", "procedural", "code-generation"]
+categories = ["game-development", "development-tools"]
+authors = ["Joe Buehler <joe@example.com>"]
+readme = "README.md"
+exclude = [
+    "examples/**/*",
+    "tests/**/*",
+    ".github/**/*",
+    "target/**/*",
+    "*.orig",
+    "Cargo.lock"
+]
+
+[[bin]]
+name = "bevy-ai"
+path = "src/main.rs"
+
+[lib]
+name = "bevy_ai"
+path = "src/lib.rs"
+
+[features]
+default = ["bevy-integration"]
+bevy-integration = ["dep:bevy"]
+
+[dependencies]
+# CLI dependencies
+clap = { version = "4.4", features = ["derive"] }
+tokio = { version = "1.0", features = ["full"] }
+
+# HTTP and serialization
+reqwest = { version = "0.11", features = ["json"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "0.8"
+
+# Bevy engine (optional for library users)
+bevy = { version = "0.14", optional = true }
+
+# Error handling
+thiserror = "1.0"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Configuration
+config = "0.14"
+dirs = "5.0"
+
+# Utilities
+uuid = { version = "1.0", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+handlebars = "5.0"
+syn = { version = "2.0", features = ["full"] }
+quote = "1.0"
+walkdir = "2.0"
+md5 = "0.7"
+tempfile = "3.0"
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]
+targets = ["x86_64-unknown-linux-gnu"]
+
+[[example]]
+name = "basic_generation"
+path = "examples/basic_generation.rs"
+
+[[example]]
+name = "project_management"
+path = "examples/project_management.rs"
+
+[[example]]
+name = "multi_provider"
+path = "examples/multi_provider.rs"
+
+[[example]]
+name = "templates"
+path = "examples/templates.rs"
