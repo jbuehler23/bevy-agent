@@ -52,7 +52,9 @@ jobs:
         fi
 
     - name: Login to crates.io
-      run: cargo login ${{ secrets.CRATES_IO_TOKEN }}
+      run: cargo login $CRATES_IO_TOKEN
+      env:
+        CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
 
     - name: Publish to crates.io
       run: cargo publish

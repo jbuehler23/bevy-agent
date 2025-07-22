@@ -24,7 +24,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     // Generate initial game
     println!("Generating initial game code...");
-    let response = project.generate_game(
+    project.generate_game(
         "A 2D puzzle game with grid-based mechanics"
     ).await?;
     
