@@ -1,6 +1,6 @@
 //! Example showing project management features
 
-use bevy_agent::{Project, BevyAIAgent, AIConfig};
+use bevy_agent::{AIConfig, BevyAIAgent, Project};
 use tempfile::TempDir;
 
 #[tokio::main]
@@ -8,35 +8,40 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create a temporary directory for this example
     let temp_dir = TempDir::new()?;
     let project_path = temp_dir.path().join("example-game");
-    
+
     // Initialize configuration
     let config = AIConfig::load_or_create()?;
     let agent = BevyAIAgent::new(config).await?;
-    
+
     // Create a new project
     println!("Creating new project...");
     let mut project = Project::init(
         project_path.clone(),
         "Example Game",
         "A demonstration of Bevy AI project management",
-        agent
-    ).await?;
-    
+        agent,
+    )
+    .await?;
+
     // Generate initial game
     println!("Generating initial game code...");
-    project.generate_game(
-        "A 2D puzzle game with grid-based mechanics"
-    ).await?;
-    
+    project
+        .generate_game("A 2D puzzle game with grid-based mechanics")
+        .await?;
+
     println!("Initial game generated!");
-    
+
     // Add features
     println!("Adding inventory system...");
-    project.add_feature("inventory system with item management").await?;
-    
+    project
+        .add_feature("inventory system with item management")
+        .await?;
+
     println!("Adding save/load functionality...");
-    project.add_feature("save and load game state to JSON files").await?;
-    
+    project
+        .add_feature("save and load game state to JSON files")
+        .await?;
+
     // Show project statistics
     let stats = project.manager().stats().await?;
     println!("Project Statistics:");
@@ -44,7 +49,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("  AI Conversations: {}", stats.conversations);
     println!("  Generated Files: {}", stats.generated_files);
     println!("  Features: {}", stats.features);
-    
+
     // Show project info
     if let Some(config) = project.manager().config() {
         println!("Project Info:");
@@ -53,8 +58,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         println!("  Features: {:?}", config.metadata.features);
         println!("  Conversations: {}", config.conversations.len());
     }
-    
-    println!("Example completed! Project created at: {}", project_path.display());
-    
+
+    println!(
+        "Example completed! Project created at: {}",
+        project_path.display()
+    );
+
     Ok(())
 }

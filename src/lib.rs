@@ -1,11 +1,11 @@
 //! # Bevy AI Agent - AI-Powered Game Development Assistant
-//! 
+//!
 //! Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edge AI models
 //! (GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language
 //! code generation, intelligent feature addition, and automated code optimization.
-//! 
+//!
 //! ## Features
-//! 
+//!
 //! - **Natural Language Game Creation**: Describe your game in plain English and get working Bevy code
 //! - **Intelligent Feature Addition**: Add complex systems to existing games with AI assistance
 //! - **Code Analysis & Optimization**: AI-powered code review and performance improvements
@@ -14,42 +14,42 @@
 //! - **Smart Dependency Management**: Automatically detects and manages Cargo dependencies
 //! - **Built-in Game Templates**: 5 pre-built game templates for rapid prototyping
 //! - **Project Management**: Complete project lifecycle management with git integration
-//! 
+//!
 //! ## Installation
-//! 
+//!
 //! Add this to your `Cargo.toml`:
-//! 
+//!
 //! ```toml
 //! [dependencies]
 //! bevy-agent = "0.1"
 //! bevy = "0.14"  # Optional, for Bevy integration features
 //! tokio = { version = "1.0", features = ["full"] }  # For async support
 //! ```
-//! 
+//!
 //! ## CLI Installation
-//! 
+//!
 //! ```bash
 //! # Install the CLI tool
 //! cargo install bevy-agent
-//! 
+//!
 //! # Configure API keys
 //! bevy-agent config --openai-key sk-...
-//! 
+//!
 //! # Create a new game
 //! bevy-agent create "2D platformer with physics and collectibles"
-//! 
+//!
 //! # Add features to existing games
 //! bevy-agent add "inventory system with drag-and-drop UI"
 //! ```
-//! 
+//!
 //! ## Library Usage
-//! 
+//!
 //! ### Basic AI Agent Usage
-//! 
+//!
 //! ```rust,no_run
 //! use bevy_agent::{BevyAIAgent, AIConfig};
 //! use bevy_agent::config::OpenAIConfig;
-//! 
+//!
 //! #[tokio::main]
 //! async fn main() -> bevy_agent::Result<()> {
 //!     // Configure AI provider
@@ -76,12 +76,12 @@
 //!     Ok(())
 //! }
 //! ```
-//! 
+//!
 //! ### Using Game Templates
-//! 
+//!
 //! ```rust,no_run
 //! use bevy_agent::game_templates::{TemplateManager, TemplateContext};
-//! 
+//!
 //! #[tokio::main]
 //! async fn main() -> bevy_agent::Result<()> {
 //!     let manager = TemplateManager::new()?;
@@ -102,38 +102,38 @@
 //!     Ok(())
 //! }
 //! ```
-//! 
+//!
 //! ## Available AI Models
-//! 
+//!
 //! - **OpenAI**: GPT-4, GPT-3.5-turbo
 //! - **Anthropic**: Claude-3 Opus, Sonnet, Haiku
 //! - **Google**: Gemini Pro, Gemini Pro Vision
-//! 
+//!
 //! ## Game Templates
-//! 
+//!
 //! The library includes 5 built-in game templates:
-//! 
+//!
 //! - `basic_game`: Simple 3D scene with camera and lighting
 //! - `platformer_2d`: 2D platformer with physics and collectibles
 //! - `fps_3d`: 3D first-person shooter with basic enemies
 //! - `puzzle_game`: Grid-based puzzle game with level progression
 //! - `strategy_game`: Real-time strategy with units and resources
-//! 
+//!
 //! ## Configuration
-//! 
+//!
 //! The library supports multiple configuration methods:
-//! 
+//!
 //! 1. **Environment Variables**: `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`
 //! 2. **Configuration Files**: TOML, JSON, YAML formats
 //! 3. **Programmatic**: Direct configuration in code
-//! 
+//!
 //! ## Error Handling
-//! 
+//!
 //! All functions return `Result<T, BevyAIError>` for comprehensive error handling:
-//! 
+//!
 //! ```rust,no_run
 //! use bevy_agent::{BevyAIError, Result};
-//! 
+//!
 //! fn handle_errors() -> Result<()> {
 //!     match some_ai_operation() {
 //!         Ok(result) => println!("Success: {}", result),
@@ -143,7 +143,7 @@
 //!     }
 //!     Ok(())
 //! }
-//! 
+//!
 //! # fn some_ai_operation() -> Result<String> { Ok("test".to_string()) }
 //! ```
 

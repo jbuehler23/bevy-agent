@@ -75,44 +75,45 @@ impl TemplateManager {
     /// Create a new template manager
     pub fn new() -> Result<Self> {
         let mut handlebars = Handlebars::new();
-        
+
         // Register built-in templates
         Self::register_builtin_templates(&mut handlebars)?;
-        
+
         Ok(Self { handlebars })
     }
-    
+
     /// Register built-in templates
     fn register_builtin_templates(handlebars: &mut Handlebars) -> Result<()> {
         // Basic game template
         handlebars.register_template_string("basic_game", BASIC_GAME_TEMPLATE)?;
-        
+
         // 2D Platformer template
         handlebars.register_template_string("platformer_2d", PLATFORMER_2D_TEMPLATE)?;
-        
+
         // 3D FPS template
         handlebars.register_template_string("fps_3d", FPS_3D_TEMPLATE)?;
-        
+
         // Puzzle game template
         handlebars.register_template_string("puzzle_game", PUZZLE_GAME_TEMPLATE)?;
-        
+
         // Strategy game template
         handlebars.register_template_string("strategy_game", STRATEGY_GAME_TEMPLATE)?;
-        
+
         Ok(())
     }
-    
+
     /// Generate code from template
     pub fn generate(&self, template_name: &str, context: &TemplateContext) -> Result<String> {
         let template_context = self.create_handlebars_context(context)?;
-        
-        let result = self.handlebars
+
+        let result = self
+            .handlebars
             .render(template_name, &template_context)
-            .map_err(|e| BevyAIError::Template(e))?;
-        
+            .map_err(BevyAIError::Template)?;
+
         Ok(result)
     }
-    
+
     /// Create handlebars context from template context
     fn create_handlebars_context(&self, context: &TemplateContext) -> Result<Value> {
         let mut handlebars_context = json!({
@@ -122,36 +123,41 @@ impl TemplateManager {
             "dependencies": context.dependencies,
             "bevy_version": context.bevy_version,
         });
-        
+
         // Add custom variables
         if let Some(object) = handlebars_context.as_object_mut() {
             for (key, value) in &context.custom_variables {
                 object.insert(key.clone(), value.clone());
             }
         }
-        
+
         Ok(handlebars_context)
     }
-    
+
     /// Get available templates
     pub fn available_templates(&self) -> Vec<&str> {
-        self.handlebars.get_templates().keys().map(|s| s.as_str()).collect()
+        self.handlebars
+            .get_templates()
+            .keys()
+            .map(|s| s.as_str())
+            .collect()
     }
-    
+
     /// Register custom template
     pub fn register_template(&mut self, name: &str, template: &str) -> Result<()> {
         self.handlebars
             .register_template_string(name, template)
-            .map_err(|e| BevyAIError::TemplateCreation(e))?;
+            .map_err(BevyAIError::TemplateCreation)?;
         Ok(())
     }
-    
+
     /// Get built-in game templates
     pub fn builtin_templates() -> Vec<GameTemplate> {
         vec![
             GameTemplate {
                 name: "basic_game".to_string(),
-                description: "A basic Bevy game with camera, lighting, and a simple scene".to_string(),
+                description: "A basic Bevy game with camera, lighting, and a simple scene"
+                    .to_string(),
                 category: GameCategory::Educational,
                 main_template: BASIC_GAME_TEMPLATE.to_string(),
                 additional_files: HashMap::new(),
@@ -160,39 +166,60 @@ impl TemplateManager {
             },
             GameTemplate {
                 name: "platformer_2d".to_string(),
-                description: "A 2D platformer with player movement, physics, and collectibles".to_string(),
+                description: "A 2D platformer with player movement, physics, and collectibles"
+                    .to_string(),
                 category: GameCategory::Platformer,
                 main_template: PLATFORMER_2D_TEMPLATE.to_string(),
                 additional_files: HashMap::new(),
                 dependencies: vec!["bevy".to_string()],
-                features: vec!["2D sprites".to_string(), "Physics".to_string(), "Player movement".to_string()],
+                features: vec![
+                    "2D sprites".to_string(),
+                    "Physics".to_string(),
+                    "Player movement".to_string(),
+                ],
             },
             GameTemplate {
                 name: "fps_3d".to_string(),
-                description: "A 3D first-person shooter with player controller and basic enemies".to_string(),
+                description: "A 3D first-person shooter with player controller and basic enemies"
+                    .to_string(),
                 category: GameCategory::Shooter,
                 main_template: FPS_3D_TEMPLATE.to_string(),
                 additional_files: HashMap::new(),
                 dependencies: vec!["bevy".to_string()],
-                features: vec!["3D rendering".to_string(), "FPS controls".to_string(), "Shooting mechanics".to_string()],
+                features: vec![
+                    "3D rendering".to_string(),
+                    "FPS controls".to_string(),
+                    "Shooting mechanics".to_string(),
+                ],
             },
             GameTemplate {
                 name: "puzzle_game".to_string(),
-                description: "A puzzle game with grid-based mechanics and level progression".to_string(),
+                description: "A puzzle game with grid-based mechanics and level progression"
+                    .to_string(),
                 category: GameCategory::Puzzle,
                 main_template: PUZZLE_GAME_TEMPLATE.to_string(),
                 additional_files: HashMap::new(),
                 dependencies: vec!["bevy".to_string()],
-                features: vec!["Grid system".to_string(), "Puzzle mechanics".to_string(), "Level management".to_string()],
+                features: vec![
+                    "Grid system".to_string(),
+                    "Puzzle mechanics".to_string(),
+                    "Level management".to_string(),
+                ],
             },
             GameTemplate {
                 name: "strategy_game".to_string(),
-                description: "A real-time strategy game with unit management and resource collection".to_string(),
+                description:
+                    "A real-time strategy game with unit management and resource collection"
+                        .to_string(),
                 category: GameCategory::Strategy,
                 main_template: STRATEGY_GAME_TEMPLATE.to_string(),
                 additional_files: HashMap::new(),
                 dependencies: vec!["bevy".to_string()],
-                features: vec!["Unit management".to_string(), "Resource system".to_string(), "RTS mechanics".to_string()],
+                features: vec![
+                    "Unit management".to_string(),
+                    "Resource system".to_string(),
+                    "RTS mechanics".to_string(),
+                ],
             },
         ]
     }
@@ -216,25 +243,25 @@ impl TemplateContext {
             custom_variables: HashMap::new(),
         }
     }
-    
+
     /// Add a feature
     pub fn with_feature(mut self, feature: String) -> Self {
         self.features.push(feature);
         self
     }
-    
+
     /// Add a dependency
     pub fn with_dependency(mut self, dependency: String) -> Self {
         self.dependencies.push(dependency);
         self
     }
-    
+
     /// Set Bevy version
     pub fn with_bevy_version(mut self, version: String) -> Self {
         self.bevy_version = version;
         self
     }
-    
+
     /// Add custom variable
     pub fn with_variable<T: Into<Value>>(mut self, key: String, value: T) -> Self {
         self.custom_variables.insert(key, value.into());

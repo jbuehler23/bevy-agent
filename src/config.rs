@@ -1,29 +1,29 @@
 //! Configuration management for Bevy AI
-//! 
+//!
 //! This module handles all configuration aspects of the Bevy AI system, including:
-//! 
+//!
 //! - AI provider configurations (OpenAI, Anthropic, Google)
 //! - Project-specific settings
 //! - Environment variable handling
 //! - Configuration file parsing (TOML, JSON)
-//! 
+//!
 //! # Configuration Sources
-//! 
+//!
 //! Configuration can be loaded from multiple sources in order of preference:
-//! 
+//!
 //! 1. Environment variables (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, etc.)
 //! 2. Configuration files (`~/.config/bevy-agent/config.toml`)
 //! 3. Project-specific config files (`./bevy-agent.toml`)
 //! 4. Default values
-//! 
+//!
 //! # Example
-//! 
+//!
 //! ```rust,no_run
 //! use bevy_agent::config::{AIConfig, OpenAIConfig};
-//! 
+//!
 //! // Load from environment
 //! let config = AIConfig::from_env().unwrap_or_default();
-//! 
+//!
 //! // Or create manually
 //! let config = AIConfig {
 //!     openai: Some(OpenAIConfig {
@@ -130,21 +130,23 @@ impl ModelType {
             ModelType::GeminiProVision => "gemini-pro-vision",
         }
     }
-    
+
     /// Get the provider for this model
     pub fn provider(&self) -> &'static str {
         match self {
             ModelType::GPT4 | ModelType::GPT4Turbo | ModelType::GPT35Turbo => "openai",
-            ModelType::Claude3Opus | ModelType::Claude3Sonnet | ModelType::Claude3Haiku => "anthropic",
+            ModelType::Claude3Opus | ModelType::Claude3Sonnet | ModelType::Claude3Haiku => {
+                "anthropic"
+            }
             ModelType::GeminiPro | ModelType::GeminiProVision => "google",
         }
     }
-    
+
     /// Check if this model supports vision/image inputs
     pub fn supports_vision(&self) -> bool {
         matches!(self, ModelType::GPT4 | ModelType::GeminiProVision)
     }
-    
+
     /// Get maximum context length for this model
     pub fn max_context_length(&self) -> usize {
         match self {
@@ -168,7 +170,7 @@ impl std::fmt::Display for ModelType {
 
 impl std::str::FromStr for ModelType {
     type Err = BevyAIError;
-    
+
     fn from_str(s: &str) -> Result<Self> {
         match s {
             "gpt-4" => Ok(ModelType::GPT4),
@@ -372,7 +374,7 @@ impl AIConfig {
     /// Load configuration from environment variables
     pub fn from_env() -> Result<Self> {
         let mut config = Self::default();
-        
+
         if let Ok(api_key) = env::var("OPENAI_API_KEY") {
             config.openai = Some(OpenAIConfig {
                 api_key,
@@ -380,52 +382,56 @@ impl AIConfig {
                 base_url: env::var("OPENAI_BASE_URL").ok(),
             });
         }
-        
+
         if let Ok(api_key) = env::var("ANTHROPIC_API_KEY") {
             config.anthropic = Some(AnthropicConfig {
                 api_key,
                 base_url: env::var("ANTHROPIC_BASE_URL").ok(),
             });
         }
-        
+
         if let Ok(api_key) = env::var("GOOGLE_API_KEY") {
             config.google = Some(GoogleConfig {
                 api_key,
                 base_url: env::var("GOOGLE_BASE_URL").ok(),
             });
         }
-        
+
         if let Ok(model) = env::var("bevy_agent_DEFAULT_MODEL") {
             config.default_model = model.parse()?;
         }
-        
+
         Ok(config)
     }
-    
+
     /// Load configuration from file
     pub fn from_file<P: AsRef<std::path::Path>>(path: P) -> Result<Self> {
         let content = fs::read_to_string(path)?;
         Ok(serde_json::from_str(&content)?)
     }
-    
+
     /// Save configuration to file
     pub fn save_to_file<P: AsRef<std::path::Path>>(&self, path: P) -> Result<()> {
         let content = serde_json::to_string_pretty(self)?;
         fs::write(path, content)?;
         Ok(())
     }
-    
+
     /// Get the default config file path
     pub fn default_config_path() -> Result<PathBuf> {
         Ok(dirs::home_dir()
-            .ok_or_else(|| BevyAIError::Config(config::ConfigError::Message("Could not find home directory".to_string())))?
+            .ok_or_else(|| {
+                BevyAIError::Config(config::ConfigError::Message(
+                    "Could not find home directory".to_string(),
+                ))
+            })?
             .join(".bevy-agent-config.json"))
     }
-    
+
     /// Load configuration from default location or create if not exists
     pub fn load_or_create() -> Result<Self> {
         let config_path = Self::default_config_path()?;
-        
+
         if config_path.exists() {
             Self::from_file(&config_path)
         } else {
@@ -434,28 +440,34 @@ impl AIConfig {
             Ok(config)
         }
     }
-    
+
     /// Get API key for a specific model
     pub fn get_api_key(&self, model: &ModelType) -> Result<String> {
         match model.provider() {
-            "openai" => self.openai.as_ref()
+            "openai" => self
+                .openai
+                .as_ref()
                 .map(|c| c.api_key.clone())
                 .ok_or_else(|| BevyAIError::missing_api_key("OpenAI")),
-            "anthropic" => self.anthropic.as_ref()
+            "anthropic" => self
+                .anthropic
+                .as_ref()
                 .map(|c| c.api_key.clone())
                 .ok_or_else(|| BevyAIError::missing_api_key("Anthropic")),
-            "google" => self.google.as_ref()
+            "google" => self
+                .google
+                .as_ref()
                 .map(|c| c.api_key.clone())
                 .ok_or_else(|| BevyAIError::missing_api_key("Google")),
             provider => Err(BevyAIError::unsupported_model(provider)),
         }
     }
-    
+
     /// Check if a model is available (has API key configured)
     pub fn is_model_available(&self, model: &ModelType) -> bool {
         self.get_api_key(model).is_ok()
     }
-    
+
     /// Get list of available models
     pub fn available_models(&self) -> Vec<ModelType> {
         let all_models = vec![
@@ -468,8 +480,9 @@ impl AIConfig {
             ModelType::GeminiPro,
             ModelType::GeminiProVision,
         ];
-        
-        all_models.into_iter()
+
+        all_models
+            .into_iter()
             .filter(|model| self.is_model_available(model))
             .collect()
     }
