@@ -32,6 +32,20 @@ Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edg
 
 ## Installation
 
+### Prerequisites
+
+**Linux systems** require additional audio development libraries:
+```bash
+# Ubuntu/Debian
+sudo apt-get install libasound2-dev libudev-dev pkg-config
+
+# Fedora/RHEL
+sudo dnf install alsa-lib-devel systemd-devel pkgconf-pkg-config
+
+# Arch Linux
+sudo pacman -S alsa-lib systemd pkgconf
+```
+
 ### CLI Tool
 ```bash
 cargo install bevy-agent
@@ -397,6 +411,22 @@ Each Bevy AI project includes a `.bevy-agent.json` file that tracks:
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ### Development Setup
+
+#### System Dependencies
+
+**Linux (Ubuntu/Debian):**
+```bash
+sudo apt-get update
+sudo apt-get install -y libasound2-dev libudev-dev pkg-config
+```
+
+**Other Linux distributions:**
+- Fedora/RHEL: `sudo dnf install alsa-lib-devel systemd-devel pkgconf-pkg-config`
+- Arch Linux: `sudo pacman -S alsa-lib systemd pkgconf`
+
+**macOS and Windows:** No additional system dependencies required.
+
+#### Building the Project
 ```bash
 git clone https://github.com/jbuehler23/bevy-agent.git
 cd bevy-agent
