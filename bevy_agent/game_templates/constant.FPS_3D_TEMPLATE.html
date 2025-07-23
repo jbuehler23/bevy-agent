@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `FPS_3D_TEMPLATE` constant in crate `bevy_agent`."><title>FPS_3D_TEMPLATE in bevy_agent::game_templates - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_agent" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc constant"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../bevy_agent/index.html">bevy_<wbr>agent</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><div id="rustdoc-modnav"><h2><a href="index.html">In bevy_<wbr>agent::<wbr>game_<wbr>templates</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">bevy_agent</a>::<wbr><a href="index.html">game_templates</a></div><h1>Constant <span class="constant">FPS_3D_TEMPLATE</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/bevy_agent/game_templates.rs.html#516-674">Source</a> </span></div><pre class="rust item-decl"><code>const FPS_3D_TEMPLATE: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.88.0/std/primitive.str.html">str</a> = r#&quot;// {{description}}
+// 3D FPS generated with Bevy AI
+
+use bevy::prelude::*;
+use bevy::window::CursorGrabMode;
+use bevy::input::mouse::MouseMotion;
+
+const MOVEMENT_SPEED: f32 = 5.0;
+const MOUSE_SENSITIVITY: f32 = 0.002;
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: &quot;{{project_name}}&quot;.to_string(),
+                cursor: bevy::window::Cursor {
+                    grab_mode: CursorGrabMode::Locked,
+                    visible: false,
+                    ..default()
+                },
+                ..default()
+            }),
+            ..default()
+        }))
+        .add_systems(Startup, setup)
+        .add_systems(Update, (
+            player_movement,
+            mouse_look,
+        ))
+        .run();
+}
+
+#[derive(Component)]
+struct Player;
+
+#[derive(Component)]
+struct PlayerCamera {
+    pitch: f32,
+    yaw: f32,
+}
+
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut&lt;Assets&lt;Mesh&gt;&gt;,
+    mut materials: ResMut&lt;Assets&lt;StandardMaterial&gt;&gt;,
+) {
+    // Player (invisible, just a transform)
+    commands.spawn((
+        SpatialBundle {
+            transform: Transform::from_xyz(0.0, 1.5, 3.0),
+            ..default()
+        },
+        Player,
+    )).with_children(|parent| {
+        // Camera as child of player
+        parent.spawn((
+            Camera3dBundle {
+                transform: Transform::from_xyz(0.0, 0.0, 0.0),
+                ..default()
+            },
+            PlayerCamera {
+                pitch: 0.0,
+                yaw: 0.0,
+            },
+        ));
+    });
+
+    // Ground
+    commands.spawn(PbrBundle {
+        mesh: meshes.add(Plane3d::default().mesh().size(20.0, 20.0)),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3)),
+        ..default()
+    });
+
+    // Some cubes to shoot at
+    for i in 0..5 {
+        commands.spawn(PbrBundle {
+            mesh: meshes.add(Cuboid::new(1.0, 1.0, 1.0)),
+            material: materials.add(Color::rgb(0.8, 0.2, 0.2)),
+            transform: Transform::from_xyz(
+                (i as f32 - 2.0) * 3.0,
+                0.5,
+                -5.0,
+            ),
+            ..default()
+        });
+    }
+
+    // Light
+    commands.spawn(DirectionalLightBundle {
+        directional_light: DirectionalLight {
+            shadows_enabled: true,
+            ..default()
+        },
+        transform: Transform {
+            translation: Vec3::new(0.0, 10.0, 0.0),
+            rotation: Quat::from_rotation_x(-std::f32::consts::FRAC_PI_4),
+            ..default()
+        },
+        ..default()
+    });
+}
+
+fn player_movement(
+    keyboard: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+    time: Res&lt;Time&gt;,
+    mut player_query: Query&lt;&amp;mut Transform, With&lt;Player&gt;&gt;,
+) {
+    for mut transform in player_query.iter_mut() {
+        let mut movement = Vec3::ZERO;
+        
+        if keyboard.pressed(KeyCode::KeyW) {
+            movement += transform.forward();
+        }
+        if keyboard.pressed(KeyCode::KeyS) {
+            movement -= transform.forward();
+        }
+        if keyboard.pressed(KeyCode::KeyA) {
+            movement -= transform.right();
+        }
+        if keyboard.pressed(KeyCode::KeyD) {
+            movement += transform.right();
+        }
+        
+        movement.y = 0.0; // Don&#39;t move up/down
+        movement = movement.normalize_or_zero();
+        
+        transform.translation += movement * MOVEMENT_SPEED * time.delta_seconds();
+    }
+}
+
+fn mouse_look(
+    mut mouse_motion: EventReader&lt;MouseMotion&gt;,
+    mut camera_query: Query&lt;(&amp;mut Transform, &amp;mut PlayerCamera)&gt;,
+    mut player_query: Query&lt;&amp;mut Transform, (With&lt;Player&gt;, Without&lt;PlayerCamera&gt;)&gt;,
+) {
+    let mut delta = Vec2::ZERO;
+    for motion in mouse_motion.read() {
+        delta += motion.delta;
+    }
+    
+    if delta.length_squared() &gt; 0.0 {
+        for (mut camera_transform, mut camera) in camera_query.iter_mut() {
+            camera.yaw -= delta.x * MOUSE_SENSITIVITY;
+            camera.pitch -= delta.y * MOUSE_SENSITIVITY;
+            camera.pitch = camera.pitch.clamp(-1.5, 1.5);
+            
+            camera_transform.rotation = Quat::from_rotation_y(camera.yaw) * Quat::from_rotation_x(camera.pitch);
+        }
+        
+        // Update player Y rotation to match camera yaw
+        for mut player_transform in player_query.iter_mut() {
+            if let Ok((_, camera)) = camera_query.get_single() {
+                player_transform.rotation = Quat::from_rotation_y(camera.yaw);
+            }
+        }
+    }
+}
+&quot;#;</code></pre></section></div></main></body></html>

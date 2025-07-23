@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `STRATEGY_GAME_TEMPLATE` constant in crate `bevy_agent`."><title>STRATEGY_GAME_TEMPLATE in bevy_agent::game_templates - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_agent" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc constant"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../bevy_agent/index.html">bevy_<wbr>agent</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><div id="rustdoc-modnav"><h2><a href="index.html">In bevy_<wbr>agent::<wbr>game_<wbr>templates</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">bevy_agent</a>::<wbr><a href="index.html">game_templates</a></div><h1>Constant <span class="constant">STRATEGY_GAME_TEMPLATE</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/bevy_agent/game_templates.rs.html#862-1107">Source</a> </span></div><pre class="rust item-decl"><code>const STRATEGY_GAME_TEMPLATE: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.88.0/std/primitive.str.html">str</a> = r#&quot;// {{description}}
+// Strategy Game generated with Bevy AI
+
+use bevy::prelude::*;
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: &quot;{{project_name}}&quot;.to_string(),
+                ..default()
+            }),
+            ..default()
+        }))
+        .init_resource::&lt;GameState&gt;()
+        .init_resource::&lt;SelectedUnits&gt;()
+        .add_systems(Startup, setup)
+        .add_systems(Update, (
+            unit_selection,
+            unit_movement,
+            resource_generation,
+            camera_movement,
+        ))
+        .run();
+}
+
+#[derive(Resource, Default)]
+struct GameState {
+    resources: u32,
+}
+
+#[derive(Resource, Default)]
+struct SelectedUnits {
+    units: Vec&lt;Entity&gt;,
+}
+
+#[derive(Component)]
+struct Unit {
+    health: f32,
+    max_health: f32,
+    unit_type: UnitType,
+}
+
+#[derive(Component)]
+struct Selectable {
+    selected: bool,
+}
+
+#[derive(Component)]
+struct ResourceNode {
+    resource_type: ResourceType,
+    amount: u32,
+}
+
+#[derive(Component)]
+struct MainCamera;
+
+#[derive(Clone)]
+enum UnitType {
+    Worker,
+    Soldier,
+    Scout,
+}
+
+enum ResourceType {
+    Gold,
+    Stone,
+    Wood,
+}
+
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut&lt;Assets&lt;Mesh&gt;&gt;,
+    mut materials: ResMut&lt;Assets&lt;StandardMaterial&gt;&gt;,
+) {
+    // Camera
+    commands.spawn((
+        Camera3dBundle {
+            transform: Transform::from_xyz(0.0, 10.0, 10.0)
+                .looking_at(Vec3::ZERO, Vec3::Y),
+            ..default()
+        },
+        MainCamera,
+    ));
+
+    // Light
+    commands.spawn(DirectionalLightBundle {
+        directional_light: DirectionalLight {
+            shadows_enabled: true,
+            ..default()
+        },
+        transform: Transform {
+            translation: Vec3::new(0.0, 10.0, 0.0),
+            rotation: Quat::from_rotation_x(-std::f32::consts::FRAC_PI_4),
+            ..default()
+        },
+        ..default()
+    });
+
+    // Ground
+    commands.spawn(PbrBundle {
+        mesh: meshes.add(Plane3d::default().mesh().size(20.0, 20.0)),
+        material: materials.add(Color::rgb(0.3, 0.5, 0.3)),
+        ..default()
+    });
+
+    // Spawn some units
+    for i in 0..3 {
+        commands.spawn((
+            PbrBundle {
+                mesh: meshes.add(Cuboid::new(0.5, 1.0, 0.5)),
+                material: materials.add(Color::BLUE),
+                transform: Transform::from_xyz(i as f32 * 2.0 - 2.0, 0.5, 0.0),
+                ..default()
+            },
+            Unit {
+                health: 100.0,
+                max_health: 100.0,
+                unit_type: UnitType::Worker,
+            },
+            Selectable { selected: false },
+        ));
+    }
+
+    // Spawn resource nodes
+    let resource_positions = [
+        (Vec3::new(5.0, 0.5, 5.0), ResourceType::Gold),
+        (Vec3::new(-5.0, 0.5, 5.0), ResourceType::Stone),
+        (Vec3::new(0.0, 0.5, -5.0), ResourceType::Wood),
+    ];
+
+    for (position, resource_type) in resource_positions {
+        let color = match resource_type {
+            ResourceType::Gold =&gt; Color::YELLOW,
+            ResourceType::Stone =&gt; Color::GRAY,
+            ResourceType::Wood =&gt; Color::rgb(0.6, 0.3, 0.1),
+        };
+
+        commands.spawn((
+            PbrBundle {
+                mesh: meshes.add(Cylinder::new(0.8, 1.5)),
+                material: materials.add(color),
+                transform: Transform::from_translation(position),
+                ..default()
+            },
+            ResourceNode {
+                resource_type,
+                amount: 100,
+            },
+        ));
+    }
+}
+
+fn unit_selection(
+    mouse_input: Res&lt;ButtonInput&lt;MouseButton&gt;&gt;,
+    mut selectable_query: Query&lt;&amp;mut Selectable&gt;,
+    mut selected_units: ResMut&lt;SelectedUnits&gt;,
+) {
+    if mouse_input.just_pressed(MouseButton::Left) {
+        // Simple selection - select all units for now
+        // In a real game, you&#39;d use raycasting to select specific units
+        selected_units.units.clear();
+        
+        for (entity, mut selectable) in selectable_query.iter_mut().enumerate() {
+            selectable.selected = entity == 0; // Select first unit only
+            if selectable.selected {
+                selected_units.units.push(Entity::from_raw(entity as u32));
+            }
+        }
+    }
+}
+
+fn unit_movement(
+    keyboard: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+    time: Res&lt;Time&gt;,
+    selected_units: Res&lt;SelectedUnits&gt;,
+    mut unit_query: Query&lt;(&amp;mut Transform, &amp;Selectable), With&lt;Unit&gt;&gt;,
+) {
+    let mut movement = Vec3::ZERO;
+    
+    if keyboard.pressed(KeyCode::KeyW) {
+        movement.z -= 1.0;
+    }
+    if keyboard.pressed(KeyCode::KeyS) {
+        movement.z += 1.0;
+    }
+    if keyboard.pressed(KeyCode::KeyA) {
+        movement.x -= 1.0;
+    }
+    if keyboard.pressed(KeyCode::KeyD) {
+        movement.x += 1.0;
+    }
+    
+    if movement.length() &gt; 0.0 {
+        movement = movement.normalize() * 3.0 * time.delta_seconds();
+        
+        for (mut transform, selectable) in unit_query.iter_mut() {
+            if selectable.selected {
+                transform.translation += movement;
+            }
+        }
+    }
+}
+
+fn resource_generation(
+    time: Res&lt;Time&gt;,
+    mut game_state: ResMut&lt;GameState&gt;,
+    mut last_generation: Local&lt;f32&gt;,
+) {
+    *last_generation += time.delta_seconds();
+    
+    if *last_generation &gt;= 1.0 {
+        game_state.resources += 10;
+        *last_generation = 0.0;
+        info!(&quot;Resources: {}&quot;, game_state.resources);
+    }
+}
+
+fn camera_movement(
+    keyboard: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+    time: Res&lt;Time&gt;,
+    mut camera_query: Query&lt;&amp;mut Transform, With&lt;MainCamera&gt;&gt;,
+) {
+    for mut transform in camera_query.iter_mut() {
+        let mut movement = Vec3::ZERO;
+        
+        if keyboard.pressed(KeyCode::ArrowUp) {
+            movement.z -= 1.0;
+        }
+        if keyboard.pressed(KeyCode::ArrowDown) {
+            movement.z += 1.0;
+        }
+        if keyboard.pressed(KeyCode::ArrowLeft) {
+            movement.x -= 1.0;
+        }
+        if keyboard.pressed(KeyCode::ArrowRight) {
+            movement.x += 1.0;
+        }
+        
+        if movement.length() &gt; 0.0 {
+            movement = movement.normalize() * 8.0 * time.delta_seconds();
+            transform.translation += movement;
+        }
+    }
+}
+&quot;#;</code></pre></section></div></main></body></html>

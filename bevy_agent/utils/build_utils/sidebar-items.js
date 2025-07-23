@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["cargo_check","cargo_clippy","cargo_fmt","check_cargo","check_rust_toolchain"]};

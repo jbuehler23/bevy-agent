@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["clean_ai_code","extract_code_blocks","format_rust_code","pascal_to_snake","snake_to_pascal"]};

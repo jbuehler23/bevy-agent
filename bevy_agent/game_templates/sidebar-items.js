@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["BASIC_GAME_TEMPLATE","FPS_3D_TEMPLATE","PLATFORMER_2D_TEMPLATE","PUZZLE_GAME_TEMPLATE","STRATEGY_GAME_TEMPLATE"],"enum":["GameCategory"],"struct":["GameTemplate","TemplateContext","TemplateManager"]};

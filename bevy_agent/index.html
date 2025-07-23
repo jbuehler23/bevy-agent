@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Bevy AI Agent - AI-Powered Game Development Assistant"><title>bevy_agent - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="bevy_agent" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../static.files/storage-4e99c027.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../bevy_agent/index.html">bevy_<wbr>agent</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#bevy-ai-agent---ai-powered-game-development-assistant" title="Bevy AI Agent - AI-Powered Game Development Assistant">Bevy AI Agent - AI-Powered Game Development Assistant</a><ul><li><a href="#features" title="Features">Features</a></li><li><a href="#installation" title="Installation">Installation</a></li><li><a href="#cli-installation" title="CLI Installation">CLI Installation</a></li><li><a href="#library-usage" title="Library Usage">Library Usage</a></li><li><a href="#available-ai-models" title="Available AI Models">Available AI Models</a></li><li><a href="#game-templates" title="Game Templates">Game Templates</a></li><li><a href="#configuration" title="Configuration">Configuration</a></li><li><a href="#error-handling" title="Error Handling">Error Handling</a></li></ul></li></ul><h3><a href="#reexports">Crate Items</a></h3><ul class="block"><li><a href="#reexports" title="Re-exports">Re-exports</a></li><li><a href="#modules" title="Modules">Modules</a></li><li><a href="#constants" title="Constants">Constants</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Crate <span>bevy_agent</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/bevy_agent/lib.rs.html#1-173">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="bevy-ai-agent---ai-powered-game-development-assistant"><a class="doc-anchor" href="#bevy-ai-agent---ai-powered-game-development-assistant">§</a>Bevy AI Agent - AI-Powered Game Development Assistant</h2>
+<p>Bevy AI Agent is a comprehensive library and CLI tool that leverages cutting-edge AI models
+(GPT-4, Claude-3, Gemini) to accelerate Bevy game development through natural language
+code generation, intelligent feature addition, and automated code optimization.</p>
+<h3 id="features"><a class="doc-anchor" href="#features">§</a>Features</h3>
+<ul>
+<li><strong>Natural Language Game Creation</strong>: Describe your game in plain English and get working Bevy code</li>
+<li><strong>Intelligent Feature Addition</strong>: Add complex systems to existing games with AI assistance</li>
+<li><strong>Code Analysis &amp; Optimization</strong>: AI-powered code review and performance improvements</li>
+<li><strong>Multi-Model Support</strong>: Choose from GPT-4, Claude-3, or Gemini for different tasks</li>
+<li><strong>Context-Aware Generation</strong>: Understands existing codebase and maintains consistency</li>
+<li><strong>Smart Dependency Management</strong>: Automatically detects and manages Cargo dependencies</li>
+<li><strong>Built-in Game Templates</strong>: 5 pre-built game templates for rapid prototyping</li>
+<li><strong>Project Management</strong>: Complete project lifecycle management with git integration</li>
+</ul>
+<h3 id="installation"><a class="doc-anchor" href="#installation">§</a>Installation</h3>
+<p>Add this to your <code>Cargo.toml</code>:</p>
+<div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+bevy-agent = &quot;0.1&quot;
+bevy = &quot;0.14&quot;  # Optional, for Bevy integration features
+tokio = { version = &quot;1.0&quot;, features = [&quot;full&quot;] }  # For async support</code></pre></div><h3 id="cli-installation"><a class="doc-anchor" href="#cli-installation">§</a>CLI Installation</h3><div class="example-wrap"><pre class="language-bash"><code># Install the CLI tool
+cargo install bevy-agent
+
+# Configure API keys
+bevy-agent config --openai-key sk-...
+
+# Create a new game
+bevy-agent create &quot;2D platformer with physics and collectibles&quot;
+
+# Add features to existing games
+bevy-agent add &quot;inventory system with drag-and-drop UI&quot;</code></pre></div><h3 id="library-usage"><a class="doc-anchor" href="#library-usage">§</a>Library Usage</h3><h4 id="basic-ai-agent-usage"><a class="doc-anchor" href="#basic-ai-agent-usage">§</a>Basic AI Agent Usage</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>bevy_agent::{BevyAIAgent, AIConfig};
+<span class="kw">use </span>bevy_agent::config::OpenAIConfig;
+
+<span class="attr">#[tokio::main]
+</span><span class="kw">async fn </span>main() -&gt; bevy_agent::Result&lt;()&gt; {
+    <span class="comment">// Configure AI provider
+    </span><span class="kw">let </span>config = AIConfig {
+        openai: <span class="prelude-val">Some</span>(OpenAIConfig {
+            api_key: <span class="string">"your-openai-key"</span>.to_string(),
+            organization: <span class="prelude-val">None</span>,
+            base_url: <span class="prelude-val">None</span>,
+        }),
+        ..Default::default()
+    };
+     
+    <span class="kw">let </span>agent = BevyAIAgent::new(config).<span class="kw">await</span><span class="question-mark">?</span>;
+     
+    <span class="comment">// Generate game code
+    </span><span class="kw">let </span>response = agent
+        .request(<span class="string">"Create a simple 2D shooter game"</span>)
+        .with_system_prompt(<span class="string">"You are a Bevy game engine expert"</span>)
+        .with_max_tokens(<span class="number">2000</span>)
+        .execute()
+        .<span class="kw">await</span><span class="question-mark">?</span>;
+     
+    <span class="macro">println!</span>(<span class="string">"Generated code:\n{}"</span>, response.content);
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+<h4 id="using-game-templates"><a class="doc-anchor" href="#using-game-templates">§</a>Using Game Templates</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>bevy_agent::game_templates::{TemplateManager, TemplateContext};
+
+<span class="attr">#[tokio::main]
+</span><span class="kw">async fn </span>main() -&gt; bevy_agent::Result&lt;()&gt; {
+    <span class="kw">let </span>manager = TemplateManager::new()<span class="question-mark">?</span>;
+     
+    <span class="comment">// List available templates
+    </span><span class="kw">for </span>template <span class="kw">in </span>manager.available_templates() {
+        <span class="macro">println!</span>(<span class="string">"Available template: {}"</span>, template);
+    }
+     
+    <span class="comment">// Generate from template
+    </span><span class="kw">let </span>context = TemplateContext::new(
+        <span class="string">"MyGame"</span>.to_string(),
+        <span class="string">"A 2D platformer game"</span>.to_string()
+    );
+     
+    <span class="kw">let </span>code = manager.generate(<span class="string">"platformer_2d"</span>, <span class="kw-2">&amp;</span>context)<span class="question-mark">?</span>;
+    <span class="macro">println!</span>(<span class="string">"Generated game code:\n{}"</span>, code);
+    <span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+<h3 id="available-ai-models"><a class="doc-anchor" href="#available-ai-models">§</a>Available AI Models</h3>
+<ul>
+<li><strong>OpenAI</strong>: GPT-4, GPT-3.5-turbo</li>
+<li><strong>Anthropic</strong>: Claude-3 Opus, Sonnet, Haiku</li>
+<li><strong>Google</strong>: Gemini Pro, Gemini Pro Vision</li>
+</ul>
+<h3 id="game-templates"><a class="doc-anchor" href="#game-templates">§</a>Game Templates</h3>
+<p>The library includes 5 built-in game templates:</p>
+<ul>
+<li><code>basic_game</code>: Simple 3D scene with camera and lighting</li>
+<li><code>platformer_2d</code>: 2D platformer with physics and collectibles</li>
+<li><code>fps_3d</code>: 3D first-person shooter with basic enemies</li>
+<li><code>puzzle_game</code>: Grid-based puzzle game with level progression</li>
+<li><code>strategy_game</code>: Real-time strategy with units and resources</li>
+</ul>
+<h3 id="configuration"><a class="doc-anchor" href="#configuration">§</a>Configuration</h3>
+<p>The library supports multiple configuration methods:</p>
+<ol>
+<li><strong>Environment Variables</strong>: <code>OPENAI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>, <code>GOOGLE_API_KEY</code></li>
+<li><strong>Configuration Files</strong>: TOML, JSON, YAML formats</li>
+<li><strong>Programmatic</strong>: Direct configuration in code</li>
+</ol>
+<h3 id="error-handling"><a class="doc-anchor" href="#error-handling">§</a>Error Handling</h3>
+<p>All functions return <code>Result&lt;T, BevyAIError&gt;</code> for comprehensive error handling:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>bevy_agent::{BevyAIError, <span class="prelude-ty">Result</span>};
+
+<span class="kw">fn </span>handle_errors() -&gt; <span class="prelude-ty">Result</span>&lt;()&gt; {
+    <span class="kw">match </span>some_ai_operation() {
+        <span class="prelude-val">Ok</span>(result) =&gt; <span class="macro">println!</span>(<span class="string">"Success: {}"</span>, result),
+        <span class="prelude-val">Err</span>(BevyAIError::Http(e)) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Network error: {}"</span>, e),
+        <span class="prelude-val">Err</span>(BevyAIError::Json(e)) =&gt; <span class="macro">eprintln!</span>(<span class="string">"JSON error: {}"</span>, e),
+        <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">eprintln!</span>(<span class="string">"Other error: {}"</span>, e),
+    }
+    <span class="prelude-val">Ok</span>(())
+}
+</code></pre></div>
+</div></details><h2 id="reexports" class="section-header">Re-exports<a href="#reexports" class="anchor">§</a></h2><dl class="item-table reexports"><dt id="reexport.BevyAIAgent"><code>pub use ai::<a class="struct" href="ai/agent/struct.BevyAIAgent.html" title="struct bevy_agent::ai::agent::BevyAIAgent">BevyAIAgent</a>;</code></dt><dt id="reexport.ModelType"><code>pub use ai::<a class="enum" href="config/enum.ModelType.html" title="enum bevy_agent::config::ModelType">ModelType</a>;</code></dt><dt id="reexport.AIConfig"><code>pub use config::<a class="struct" href="config/struct.AIConfig.html" title="struct bevy_agent::config::AIConfig">AIConfig</a>;</code></dt><dt id="reexport.ProjectConfig"><code>pub use config::<a class="struct" href="config/struct.ProjectConfig.html" title="struct bevy_agent::config::ProjectConfig">ProjectConfig</a>;</code></dt><dt id="reexport.BevyAIError"><code>pub use error::<a class="enum" href="error/enum.BevyAIError.html" title="enum bevy_agent::error::BevyAIError">BevyAIError</a>;</code></dt><dt id="reexport.Result"><code>pub use error::<a class="type" href="error/type.Result.html" title="type bevy_agent::error::Result">Result</a>;</code></dt><dt id="reexport.Project"><code>pub use project::<a class="struct" href="project/struct.Project.html" title="struct bevy_agent::project::Project">Project</a>;</code></dt><dt id="reexport.ProjectManager"><code>pub use project::<a class="struct" href="project/struct.ProjectManager.html" title="struct bevy_agent::project::ProjectManager">ProjectManager</a>;</code></dt></dl><h2 id="modules" class="section-header">Modules<a href="#modules" class="anchor">§</a></h2><dl class="item-table"><dt><a class="mod" href="ai/index.html" title="mod bevy_agent::ai">ai</a></dt><dd>AI integration and model handling for Bevy AI</dd><dt><a class="mod" href="cli/index.html" title="mod bevy_agent::cli">cli</a></dt><dd>Command-line interface for Bevy AI</dd><dt><a class="mod" href="config/index.html" title="mod bevy_agent::config">config</a></dt><dd>Configuration management for Bevy AI</dd><dt><a class="mod" href="error/index.html" title="mod bevy_agent::error">error</a></dt><dd>Error types and utilities for Bevy AI</dd><dt><a class="mod" href="game_templates/index.html" title="mod bevy_agent::game_templates">game_<wbr>templates</a></dt><dd>Game templates and code generation utilities</dd><dt><a class="mod" href="project/index.html" title="mod bevy_agent::project">project</a></dt><dd>Project management and utilities for Bevy AI</dd><dt><a class="mod" href="utils/index.html" title="mod bevy_agent::utils">utils</a></dt><dd>Utility functions for Bevy AI</dd></dl><h2 id="constants" class="section-header">Constants<a href="#constants" class="anchor">§</a></h2><dl class="item-table"><dt><a class="constant" href="constant.USER_AGENT.html" title="constant bevy_agent::USER_AGENT">USER_<wbr>AGENT</a></dt><dd>User-Agent string for HTTP requests</dd><dt><a class="constant" href="constant.VERSION.html" title="constant bevy_agent::VERSION">VERSION</a></dt><dd>Current version of the library</dd></dl></section></div></main></body></html>

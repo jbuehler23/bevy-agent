@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `PUZZLE_GAME_TEMPLATE` constant in crate `bevy_agent`."><title>PUZZLE_GAME_TEMPLATE in bevy_agent::game_templates - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-1a91846b.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="bevy_agent" data-themes="" data-resource-suffix="" data-rustdoc-version="1.88.0 (6b00bc388 2025-06-23)" data-channel="1.88.0" data-search-js="search-f7877310.js" data-settings-js="settings-5514c975.js" ><script src="../../static.files/storage-4e99c027.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-7ef8a74a.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc constant"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button></nav><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../bevy_agent/index.html">bevy_<wbr>agent</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><div id="rustdoc-modnav"><h2><a href="index.html">In bevy_<wbr>agent::<wbr>game_<wbr>templates</a></h2></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">bevy_agent</a>::<wbr><a href="index.html">game_templates</a></div><h1>Constant <span class="constant">PUZZLE_GAME_TEMPLATE</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/bevy_agent/game_templates.rs.html#676-860">Source</a> </span></div><pre class="rust item-decl"><code>const PUZZLE_GAME_TEMPLATE: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.88.0/std/primitive.str.html">str</a> = r#&quot;// {{description}}
+// Puzzle Game generated with Bevy AI
+
+use bevy::prelude::*;
+
+const GRID_SIZE: usize = 8;
+const TILE_SIZE: f32 = 32.0;
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: &quot;{{project_name}}&quot;.to_string(),
+                ..default()
+            }),
+            ..default()
+        }))
+        .init_resource::&lt;GameGrid&gt;()
+        .add_systems(Startup, setup)
+        .add_systems(Update, (
+            handle_input,
+            update_visual_grid,
+        ))
+        .run();
+}
+
+#[derive(Resource)]
+struct GameGrid {
+    tiles: [[u8; GRID_SIZE]; GRID_SIZE],
+    selected: Option&lt;(usize, usize)&gt;,
+}
+
+impl Default for GameGrid {
+    fn default() -&gt; Self {
+        let mut tiles = [[0; GRID_SIZE]; GRID_SIZE];
+        
+        // Initialize with a simple pattern
+        for x in 0..GRID_SIZE {
+            for y in 0..GRID_SIZE {
+                tiles[x][y] = ((x + y) % 3) as u8;
+            }
+        }
+        
+        Self {
+            tiles,
+            selected: None,
+        }
+    }
+}
+
+#[derive(Component)]
+struct GridTile {
+    x: usize,
+    y: usize,
+}
+
+#[derive(Component)]
+struct Selected;
+
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut&lt;Assets&lt;Mesh&gt;&gt;,
+    mut materials: ResMut&lt;Assets&lt;ColorMaterial&gt;&gt;,
+    grid: Res&lt;GameGrid&gt;,
+) {
+    // Camera
+    commands.spawn(Camera2dBundle::default());
+
+    // Create visual grid
+    for x in 0..GRID_SIZE {
+        for y in 0..GRID_SIZE {
+            let world_x = (x as f32 - GRID_SIZE as f32 / 2.0) * TILE_SIZE;
+            let world_y = (y as f32 - GRID_SIZE as f32 / 2.0) * TILE_SIZE;
+            
+            let color = match grid.tiles[x][y] {
+                0 =&gt; Color::RED,
+                1 =&gt; Color::GREEN,
+                2 =&gt; Color::BLUE,
+                _ =&gt; Color::WHITE,
+            };
+            
+            commands.spawn((
+                SpriteBundle {
+                    sprite: Sprite {
+                        color,
+                        custom_size: Some(Vec2::new(TILE_SIZE - 2.0, TILE_SIZE - 2.0)),
+                        ..default()
+                    },
+                    transform: Transform::from_xyz(world_x, world_y, 0.0),
+                    ..default()
+                },
+                GridTile { x, y },
+            ));
+        }
+    }
+}
+
+fn handle_input(
+    keyboard: Res&lt;ButtonInput&lt;KeyCode&gt;&gt;,
+    mut grid: ResMut&lt;GameGrid&gt;,
+) {
+    let mut new_selected = grid.selected;
+    
+    if keyboard.just_pressed(KeyCode::ArrowUp) {
+        if let Some((x, y)) = grid.selected {
+            if y &lt; GRID_SIZE - 1 {
+                new_selected = Some((x, y + 1));
+            }
+        } else {
+            new_selected = Some((GRID_SIZE / 2, GRID_SIZE / 2));
+        }
+    }
+    
+    if keyboard.just_pressed(KeyCode::ArrowDown) {
+        if let Some((x, y)) = grid.selected {
+            if y &gt; 0 {
+                new_selected = Some((x, y - 1));
+            }
+        } else {
+            new_selected = Some((GRID_SIZE / 2, GRID_SIZE / 2));
+        }
+    }
+    
+    if keyboard.just_pressed(KeyCode::ArrowLeft) {
+        if let Some((x, y)) = grid.selected {
+            if x &gt; 0 {
+                new_selected = Some((x - 1, y));
+            }
+        } else {
+            new_selected = Some((GRID_SIZE / 2, GRID_SIZE / 2));
+        }
+    }
+    
+    if keyboard.just_pressed(KeyCode::ArrowRight) {
+        if let Some((x, y)) = grid.selected {
+            if x &lt; GRID_SIZE - 1 {
+                new_selected = Some((x + 1, y));
+            }
+        } else {
+            new_selected = Some((GRID_SIZE / 2, GRID_SIZE / 2));
+        }
+    }
+    
+    if keyboard.just_pressed(KeyCode::Space) {
+        if let Some((x, y)) = grid.selected {
+            // Cycle tile color
+            grid.tiles[x][y] = (grid.tiles[x][y] + 1) % 3;
+        }
+    }
+    
+    grid.selected = new_selected;
+}
+
+fn update_visual_grid(
+    grid: Res&lt;GameGrid&gt;,
+    mut commands: Commands,
+    mut tile_query: Query&lt;(Entity, &amp;mut Sprite, &amp;GridTile), Without&lt;Selected&gt;&gt;,
+    selected_query: Query&lt;Entity, With&lt;Selected&gt;&gt;,
+) {
+    // Remove old selection
+    for entity in selected_query.iter() {
+        commands.entity(entity).remove::&lt;Selected&gt;();
+    }
+    
+    // Update tile colors and add selection
+    for (entity, mut sprite, tile) in tile_query.iter_mut() {
+        let color = match grid.tiles[tile.x][tile.y] {
+            0 =&gt; Color::RED,
+            1 =&gt; Color::GREEN,
+            2 =&gt; Color::BLUE,
+            _ =&gt; Color::WHITE,
+        };
+        
+        sprite.color = color;
+        
+        // Add selection highlight
+        if let Some((sel_x, sel_y)) = grid.selected {
+            if tile.x == sel_x &amp;&amp; tile.y == sel_y {
+                sprite.color = Color::YELLOW;
+                commands.entity(entity).insert(Selected);
+            }
+        }
+    }
+}
+&quot;#;</code></pre></section></div></main></body></html>

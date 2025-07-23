@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ModelType"],"struct":["AIConfig","AnthropicConfig","ConversationEntry","CustomTemplate","Dependency","GeneratedFile","GenerationConfig","GoogleConfig","OpenAIConfig","ProjectConfig","ProjectMetadata","ProjectSettings","TemplateVariable"]};

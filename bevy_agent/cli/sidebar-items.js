@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["BuildOperation","Commands","ExportFormat","ImprovementAspect","ProjectOperation","TemplateOperation"],"struct":["Cli","CliHandler"]};

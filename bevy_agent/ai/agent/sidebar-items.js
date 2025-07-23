@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"struct":["AIRequest","AIResponse","AnthropicContent","AnthropicMessage","AnthropicRequest","AnthropicResponse","AnthropicUsage","BevyAIAgent","GoogleCandidate","GoogleContent","GoogleGenerationConfig","GooglePart","GoogleRequest","GoogleResponse","GoogleUsage","OpenAIChoice","OpenAIMessage","OpenAIRequest","OpenAIResponse","OpenAIUsage"]};

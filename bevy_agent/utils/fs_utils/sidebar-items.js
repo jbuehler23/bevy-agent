@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["backup_file","calculate_file_hash","count_lines","find_rust_files","get_extension"]};
