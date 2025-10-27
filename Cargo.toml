@@ -34,7 +34,7 @@ bevy-integration = ["dep:bevy"]
 
 [dependencies]
 # CLI dependencies
-clap = { version = "4.4", features = ["derive"] }
+clap = { version = "4.5", features = ["derive"] }
 tokio = { version = "1.0", features = ["full"] }
 
 # HTTP and serialization
