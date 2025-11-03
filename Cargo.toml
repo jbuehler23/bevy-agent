@@ -64,7 +64,7 @@ handlebars = "5.0"
 syn = { version = "2.0", features = ["full"] }
 quote = "1.0"
 walkdir = "2.0"
-md5 = "0.7"
+md5 = "0.8"
 tempfile = "3.0"
 
 [package.metadata.docs.rs]
